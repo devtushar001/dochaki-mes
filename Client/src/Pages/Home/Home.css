@@ -1,0 +1,52 @@
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+}
+
+.home-container .boxes {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 40px;
+}
+
+.home-container .boxes div {
+    width: 95%;
+    height: 240px;
+    border: 1px solid #09918a;
+    border-radius: 10px;
+}
+
+.home-container .buttons {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    /* border: 1px solid gray; */
+    height: 34px;
+}
+
+.home-container .buttons .raw {
+    background: #09918a;
+    color: aliceblue;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.home-container .buttons .stock {
+    background: #004455;
+    color: aliceblue;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
