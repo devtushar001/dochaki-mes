@@ -223,6 +223,10 @@
     .btn {
         flex-wrap: nowrap;
     }
+
+    .updated-stock-material .updated-add-new-stock-material .box {
+        max-width: 500px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -234,6 +238,10 @@
 
     .updated-stock-material .updated-controll-form-btn button {
         width: 100%;
+    }
+
+    .updated-stock-material .updated-add-new-stock-material .box {
+        max-width: 450px;
     }
 }
 
@@ -250,5 +258,9 @@
     .updated-img-thumbnail {
         width: 100%;
         height: auto;
+    }
+
+    .updated-stock-material .updated-add-new-stock-material .box {
+        max-width: 400px;
     }
 }
