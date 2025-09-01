@@ -8,28 +8,42 @@
     grid-template-columns: 1fr 170px;
     gap: 10px;
     position: fixed;
-    right: 0;
-    left: 0;
-    top: 70px;
+    inset: 70px 0 auto;
     z-index: 500;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.33);
     background: #fff;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, .33);
 }
 
-.updated-stock-material .search-bar {
-    height: 40px;
+.updated-stock-material .search-bar,
+.updated-stock-material .updated-add-new-stock-material .box input,
+.updated-stock-material .updated-add-new-stock-material .box textarea {
     border: 1px solid #c4c4c4;
     border-radius: 5px;
     font-size: 16px;
     outline-color: #c0bfbf;
 }
 
-.updated-stock-material .updated-controll-form-btn button {
+.updated-stock-material .search-bar {
+    height: 40px;
+}
+
+.updated-stock-material .updated-controll-form-btn button,
+.updated-stock-material .updated-add-new-stock-material .box button,
+.updated-stock-material .updated-add-new-stock-material .box .updated-material-name button {
     cursor: pointer;
-    border: 1px solid #c0bfbf;
-    background: #fff;
-    padding: 10px;
+    border: 1px solid #b3b3b3;
     border-radius: 5px;
+    background: #006786;
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.updated-stock-material .updated-controll-form-btn button {
+    background: #fff;
+    border-color: #c0bfbf;
+    color: inherit;
+    padding: 10px;
 }
 
 .updated-stock-material .table-container {
@@ -55,13 +69,13 @@
     border: 1px solid #ddd;
     border-radius: 12px;
     background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
+    transition: .2s ease;
 }
 
 .table-body:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
 }
 
 .table-body>div {
@@ -71,14 +85,14 @@
 }
 
 .table-body span:first-child {
-    font-size: 0.75rem;
+    font-size: .75rem;
     font-weight: 600;
     color: #666;
     text-transform: uppercase;
 }
 
 .table-body span:last-child {
-    font-size: 0.95rem;
+    font-size: .95rem;
     font-weight: 500;
     color: #333;
 }
@@ -101,9 +115,9 @@
     padding: 6px 12px;
     border: none;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: .85rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: .2s ease;
 }
 
 .updated-btn-primary {
@@ -127,7 +141,7 @@
 .update-product img {
     width: 22px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform .2s ease;
 }
 
 .update-product img:hover {
@@ -136,19 +150,15 @@
 
 .updated-stock-material .updated-add-new-stock-material {
     margin-top: 240px;
-    width: 100%;
-    height: auto;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
 .updated-stock-material .updated-add-new-stock-material .box {
     max-width: 550px;
-    border: 1px solid rgb(211, 211, 211);
+    border: 1px solid #d3d3d3;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr;
     gap: 15px;
 }
 
@@ -156,67 +166,29 @@
     max-width: 120px;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-name {
+.updated-stock-material .updated-add-new-stock-material .box .updated-material-name,
+.updated-stock-material .updated-add-new-stock-material .box .updated-material-info {
     display: grid;
-    grid-template-columns: 0.7fr 1fr;
     gap: 3px;
     height: 35px;
     margin-bottom: 10px;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-name button {
-    cursor: pointer;
-    background: #006786;
-    border: 1px solid #b3b3b3;
-    color: #fff;
-    border-radius: 5px;
+.updated-stock-material .updated-add-new-stock-material .box .updated-material-name {
+    grid-template-columns: .7fr 1fr;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-name input {
-    padding: 6px 10px;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    font-size: 16px;
-    outline-color: #c0bfbf;
+.updated-stock-material .updated-add-new-stock-material .box .updated-material-info {
+    grid-template-columns: 1fr 1fr;
 }
 
 .updated-stock-material .updated-add-new-stock-material .box textarea {
     height: 80px;
     padding: 10px;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    font-size: 16px;
-    outline-color: #c0bfbf;
     resize: none;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
-    height: 35px;
-    margin-bottom: 10px;
-}
-
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-info input {
-    padding: 3px 5px;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    font-size: 16px;
-    outline-color: #c0bfbf;
-}
-
-.updated-stock-material .updated-add-new-stock-material .box button {
-    cursor: pointer;
-    background: #006786;
-    border: 1px solid #b3b3b3;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-}
 /* 📱 Responsive */
 @media (max-width: 992px) {
     .table-body {
@@ -272,7 +244,6 @@
     }
 
     .table-body>div {
-        /* flex-direction: column; */
         align-items: flex-start;
     }
 
