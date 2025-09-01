@@ -10,6 +10,7 @@ const MesContextProvider = ({ children }) => {
     const [loginSignup, setLoginSignup] = useState(true);
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState(() => JSON.parse(localStorage.getItem("authToken")));
+    const [userName, setUserName] = useState("");
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -42,6 +43,8 @@ const MesContextProvider = ({ children }) => {
         userData,
         setUserData,
         token,
+        setUserName,
+        userName,
         setToken,  // Allow token updates dynamically
     }), [backend_url, rawMaterials, loginSignup, userData, token]);
 

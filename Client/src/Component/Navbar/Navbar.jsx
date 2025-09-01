@@ -1,51 +1,104 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Navbar.css";
 // import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { assets } from "../../Assets/Assets";
 import { CiMenuFries } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { MdChecklist } from "react-icons/md";
+import { AiOutlineStock } from "react-icons/ai";
+import { BsFiletypeRaw } from "react-icons/bs";
+import { CiUser } from "react-icons/ci";
+import { CiMenuKebab } from "react-icons/ci";
+import MesContextProvider, { MesContext } from "../../Context/MesContextProvider";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { userName } = useContext(MesContext);
+  const [sidebar, setSidebar] = useState("dashboard")
+
+
   return (
     <>
+      <div className="upper">
+        <div className="menu">
+          <CiMenuKebab onClick={() => setMenuOpen(!menuOpen)} />
+        </div>
+        <div className="user-name">
+          <p>{userName}</p>
+        </div>
+      </div>
+      <div className={`sidebar ${menuOpen ? "open" : ""}`}>
+        <ul className="sidebar-menu">
+          <Link className="not-style" to="/dashboard">
+            <li
+              id={sidebar === "dashboard" ? "isActive" : ""}
+              onClick={() => setSidebar("dashboard")}
+              className="sidebar-menu-list"
+            >
+              Dashboard
+            </li>
+          </Link>
+
+          <Link className="not-style" to="/raw-material">
+            <li
+              id={sidebar === "raw-item" ? "isActive" : ""}
+              onClick={() => setSidebar("raw-item")}
+              className="sidebar-menu-list"
+            >
+              Raw Item
+            </li>
+          </Link>
+
+          <Link className="not-style" to="/raw-material-update">
+            <li
+              id={sidebar === "raw-update-list" ? "isActive" : ""}
+              onClick={() => setSidebar("raw-update-list")}
+              className="sidebar-menu-list"
+            >
+              Raw Update List
+            </li>
+          </Link>
+
+          <Link className="not-style" to="/stock-material">
+            <li
+              id={sidebar === "stock-item" ? "isActive" : ""}
+              onClick={() => setSidebar("stock-item")}
+              className="sidebar-menu-list"
+            >
+              Stock Item
+            </li>
+          </Link>
+
+          <Link className="not-style" to="/stock-material-update">
+            <li
+              id={sidebar === "stock-update-list" ? "isActive" : ""}
+              onClick={() => setSidebar("stock-update-list")}
+              className="sidebar-menu-list"
+            >
+              Stock Update List
+            </li>
+          </Link>
+        </ul>
+      </div>
       <nav className="navbar">
-
         <div className="check-list">
-               <MdChecklist />
-
+          <MdChecklist />
         </div>
         <div className="manage-stock">
-
+          <AiOutlineStock />
         </div>
         <div className="dochaki-home">
-
+          <img src={assets.dochaki_logo} alt="" />
         </div>
         <div className="manage-raw">
-
+          <BsFiletypeRaw />
         </div>
-
         <div className="your-profile">
-
+          <CiUser />
         </div>
-        <div className="nav-logo">
-          <Link to="/">
-            <img src={assets.dochaki_logo} alt="" />
-          </Link>
-        </div>
-        <div className={`nav-menu ${menuOpen ? "open" : ""}`}>
-          <ul>
-            <Link onClick={() => setMenuOpen(!menuOpen)} className="no-style" to='/'><li>Home</li></Link>
-            <Link onClick={() => setMenuOpen(!menuOpen)} className="no-style" to='/dashboard'><li>Dashboard</li></Link>
-            <Link onClick={() => setMenuOpen(!menuOpen)} className="no-style" to='/stock-material'><li>Stock item</li></Link>
-            <Link onClick={() => setMenuOpen(!menuOpen)} className="no-style" to='/raw-material'><li>Raw item</li></Link>
-            <Link onClick={() => setMenuOpen(!menuOpen)} className="no-style" to='/stock-material-update'><li>Stock update</li></Link>
-            <Link onClick={() => setMenuOpen(!menuOpen)} className="no-style" to='/raw-material-update'><li>Raw update</li></Link>
-          </ul>
-        </div>
-        <CiMenuFries className="menu_icon" onClick={() => setMenuOpen(!menuOpen)} style={{ height: "32px" }} src={assets.menu_icon} size={30} />
       </nav>
+
     </>
   );
 };

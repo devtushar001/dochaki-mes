@@ -7,7 +7,7 @@ import { assets } from "../../Assets/Assets";
 
 const LoginSignUp = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const { backend_url, token, setToken, setLoginSignup } = useContext(MesContext);
+    const { backend_url, token, setToken, setLoginSignup, setUserName } = useContext(MesContext);
     const [otp, setOtp] = useState(false);
     const [userData, setUserData] = useState({
         name: "",
@@ -42,6 +42,7 @@ const LoginSignUp = () => {
                 return;
             }
             const data = await res.json();
+            setUserName(data.data.name);
             if (!data.success) {
                 setLoginSignup(true);
                 navigate("/");
