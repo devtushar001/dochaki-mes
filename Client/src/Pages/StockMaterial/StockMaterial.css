@@ -1,22 +1,24 @@
+/* 🌟 Base Styles */
 .updated-stock-material {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* 🔹 Control Bar */
 .updated-stock-material .updated-controll-form-btn {
-    padding: 20px;
+    position: fixed;
+    inset: 70px 0 auto;
     display: grid;
     grid-template-columns: 1fr 170px;
     gap: 10px;
-    position: fixed;
-    inset: 70px 0 auto;
-    z-index: 500;
+    padding: 20px;
     background: #fff;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, .33);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.33);
+    z-index: 500;
 }
 
 .updated-stock-material .search-bar,
-.updated-stock-material .updated-add-new-stock-material .box input,
-.updated-stock-material .updated-add-new-stock-material .box textarea {
+.updated-stock-material .updated-add-new-stock-material input,
+.updated-stock-material .updated-add-new-stock-material textarea {
     border: 1px solid #c4c4c4;
     border-radius: 5px;
     font-size: 16px;
@@ -27,39 +29,38 @@
     height: 40px;
 }
 
-.updated-stock-material .updated-controll-form-btn button,
-.updated-stock-material .updated-add-new-stock-material .box button,
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-name button {
+.updated-stock-material button {
     cursor: pointer;
-    border: 1px solid #b3b3b3;
     border-radius: 5px;
-    background: #006786;
-    color: #fff;
     padding: 10px;
     font-size: 16px;
+    transition: 0.2s ease;
 }
 
 .updated-stock-material .updated-controll-form-btn button {
     background: #fff;
-    border-color: #c0bfbf;
-    color: inherit;
-    padding: 10px;
+    border: 1px solid #c0bfbf;
+    color: #333;
 }
 
+.updated-stock-material .updated-add-new-stock-material button {
+    background: #006786;
+    border: 1px solid #b3b3b3;
+    color: #fff;
+}
+
+/* 🔹 Table Container */
 .updated-stock-material .table-container {
     margin-top: 200px;
     padding: 20px;
     overflow-x: auto;
     border: 1px solid #c4c4c4;
-}
-
-.table-container {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 10px;
 }
 
+/* 🔹 Table Row */
 .table-body {
     display: grid;
     grid-template-columns: 60px 2fr 120px 3fr 1fr 1fr 2fr 40px;
@@ -69,13 +70,13 @@
     border: 1px solid #ddd;
     border-radius: 12px;
     background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
-    transition: .2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: 0.2s ease;
 }
 
 .table-body:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .table-body>div {
@@ -85,18 +86,19 @@
 }
 
 .table-body span:first-child {
-    font-size: .75rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: #666;
     text-transform: uppercase;
 }
 
 .table-body span:last-child {
-    font-size: .95rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: #333;
 }
 
+/* 🔹 Images */
 .updated-img-thumbnail {
     width: 80px;
     height: 80px;
@@ -105,6 +107,7 @@
     border: 1px solid #ccc;
 }
 
+/* 🔹 Buttons */
 .btn {
     display: flex;
     gap: 8px;
@@ -113,11 +116,10 @@
 
 .updated-btn {
     padding: 6px 12px;
-    border: none;
     border-radius: 6px;
-    font-size: .85rem;
+    font-size: 0.85rem;
+    border: none;
     cursor: pointer;
-    transition: .2s ease;
 }
 
 .updated-btn-primary {
@@ -141,13 +143,14 @@
 .update-product img {
     width: 22px;
     cursor: pointer;
-    transition: transform .2s ease;
+    transition: transform 0.2s ease;
 }
 
 .update-product img:hover {
     transform: scale(1.2);
 }
 
+/* 🔹 Add New Material Box */
 .updated-stock-material .updated-add-new-stock-material {
     margin-top: 240px;
     display: flex;
@@ -156,40 +159,40 @@
 
 .updated-stock-material .updated-add-new-stock-material .box {
     max-width: 550px;
-    border: 1px solid #d3d3d3;
     padding: 20px;
+    border: 1px solid #d3d3d3;
     display: grid;
-    gap: 15px;
+    gap: 10px;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box img {
+.updated-stock-material .updated-add-new-stock-material img {
     max-width: 120px;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-name,
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-info {
+.updated-stock-material .updated-material-name,
+.updated-stock-material .updated-material-info {
     display: grid;
-    gap: 3px;
+    gap: 10px;
+}
+
+.updated-stock-material .updated-material-name {
+    grid-template-columns: 0.7fr 1fr;
     height: 35px;
-    margin-bottom: 10px;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-name {
-    grid-template-columns: .7fr 1fr;
-}
-
-.updated-stock-material .updated-add-new-stock-material .box .updated-material-info {
+.updated-stock-material .updated-material-info {
     grid-template-columns: 1fr 1fr;
+    height: 35px;
 }
 
-.updated-stock-material .updated-add-new-stock-material .box textarea {
+.updated-stock-material textarea {
     height: 80px;
     padding: 10px;
     resize: none;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 📱 Responsive */
+/* 📱 Responsive Breakpoints */
 @media (max-width: 992px) {
     .table-body {
         grid-template-columns: 50px 1.5fr 100px 2fr 1fr 1fr 1.5fr 30px;
@@ -232,8 +235,8 @@
 @media (max-width: 600px) {
     .updated-stock-material .updated-controll-form-btn {
         grid-template-columns: 1fr;
-        margin: 20px auto;
         top: 50px;
+        margin: 20px auto;
     }
 
     .updated-stock-material .updated-controll-form-btn button {
@@ -241,7 +244,19 @@
     }
 
     .updated-stock-material .updated-add-new-stock-material .box {
-        max-width: 450px;
+        width: 450px;
+    }
+
+    .updated-stock-material .updated-material-name,
+    .updated-stock-material .updated-material-info {
+        grid-template-columns: 1fr;
+        height: auto;
+        /* min-height: 70px; */
+    }
+
+    .updated-stock-material .updated-material-name input,
+    .updated-stock-material .updated-material-info input {
+        height: 35px;
     }
 }
 
