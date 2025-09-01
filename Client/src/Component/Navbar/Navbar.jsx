@@ -4,11 +4,31 @@ import "./Navbar.css";
 import { assets } from "../../Assets/Assets";
 import { CiMenuFries } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { MdChecklist } from "react-icons/md";
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
       <nav className="navbar">
+
+        <div className="check-list">
+               <MdChecklist />
+
+        </div>
+        <div className="manage-stock">
+
+        </div>
+        <div className="dochaki-home">
+
+        </div>
+        <div className="manage-raw">
+
+        </div>
+
+        <div className="your-profile">
+
+        </div>
         <div className="nav-logo">
           <Link to="/">
             <img src={assets.dochaki_logo} alt="" />
