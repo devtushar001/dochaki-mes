@@ -201,66 +201,67 @@ const UpdatedRawMaterial = () => {
 
     return (
         <>
-            <div className="updated-raw-material">
+            <div className="updated-stock-material">
+
                 <div className="updated-controll-form-btn">
+                    <input className="search-bar" style={{ paddingLeft: "12px" }} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Search item" />
                     <button onClick={() => setAddNew(!addNew)}>
                         {!addNew ? "Add New Product" : "Close"}
                     </button>
-                    <input style={{ paddingLeft: "12px" }} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Search item" />
                 </div>
                 {addNew && (
-                    <div className="updated-add-new-raw-material">
-                        <div className="image">
-                            {productImage.image ? (
-                                <img style={{ width: "210px" }} src={productImage.image} alt="Product" />
-                            ) : (
-                                <p>No image selected</p>
+                    <div className="updated-add-new-stock-material">
+                        <div className="box">
+                            <div className="image">
+                                {productImage.image ? (
+                                    <img style={{ width: "210px" }} src={productImage.image} alt="Product" />
+                                ) : (
+                                    <p>No image selected</p>
+                                )}
+                            </div>
+                            <div className="updated-material-name">
+                                <button onClick={() => setProductImage((prev) => ({ ...prev, selection: true }))}>
+                                    Choose Image
+                                </button>
+                                <input
+                                    value={rawData.materialName}
+                                    onChange={handleChange}
+                                    name="materialName"
+                                    type="text"
+                                    placeholder="Material name"
+                                />
+                            </div>
+
+                            {productImage.selection && (
+                                <ImageUploader object={productImage} imageSelector={setProductImage} />
                             )}
-                        </div>
-                        <div className="updated-material-name">
-                            <input
-                                value={rawData.materialName}
+                            <textarea
+                                value={rawData.description}
                                 onChange={handleChange}
-                                name="materialName"
-                                type="text"
-                                placeholder="Material name"
+                                name="description"
+                                placeholder="Searching keyword"
                             />
-                            <button onClick={() => setProductImage((prev) => ({ ...prev, selection: true }))}>
-                                Choose Image
+                            <div className="updated-material-info">
+                                <input
+                                    value={rawData.quantity}
+                                    onChange={handleChange}
+                                    type="number"
+                                    name="quantity"
+                                    placeholder="Quantity"
+                                />
+                                <input
+                                    value={rawData.color}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="color"
+                                    placeholder="Color"
+                                />
+                            </div>
+
+                            <button onClick={createRawProduct} className="updated-submit">
+                                Submit
                             </button>
                         </div>
-
-                        {productImage.selection && (
-                            <ImageUploader object={productImage} imageSelector={setProductImage} />
-                        )}
-
-                        <textarea
-                            value={rawData.description}
-                            onChange={handleChange}
-                            name="description"
-                            placeholder="Searching keyword"
-                        />
-
-                        <div className="updated-material-info">
-                            <input
-                                value={rawData.quantity}
-                                onChange={handleChange}
-                                type="number"
-                                name="quantity"
-                                placeholder="Quantity"
-                            />
-                            <input
-                                value={rawData.color}
-                                onChange={handleChange}
-                                type="text"
-                                name="color"
-                                placeholder="Color"
-                            />
-                        </div>
-
-                        <button onClick={createRawProduct} className="updated-submit">
-                            Submit
-                        </button>
                     </div>
                 )}
 
@@ -269,47 +270,61 @@ const UpdatedRawMaterial = () => {
                         <p>No stock materials available. Please add one.</p>
                     ) : (
                         <div className="table-container">
-                            <div className="table-header">
-                                <span>S.No.</span>
-                                <span>Material Name</span>
-                                <span>Image</span>
-                                <span>Description</span>
-                                <span>Quantity</span>
-                                <span>Color</span>
-                                <span >Actions</span>
-                            </div>
                             {rawMaterials.map((material, index) => (
                                 <div className="table-body">
-                                    <span>{index + 1}</span>
-                                    <span>{material.materialName}</span>
-                                    <span>
-                                        <img
-                                            src={material.imageUrl}
-                                            alt="Material"
-                                            className="updated-img-thumbnail"
-                                        />
-                                    </span>
-                                    <span>{material.description}</span>
-                                    <span>{material.quantity}</span>
-                                    <span>{material.color}</span>
-                                    <span className="btn">
-                                        <button
-                                            onClick={() => {
-                                                setInOut(true);
-                                                setProductId(material._id);
-                                                setData(prev => ({ ...prev, ProductId: material._id }));
-                                            }}
-                                            className="updated-btn updated-btn-primary"
-                                        >
-                                            In Out
-                                        </button>
-                                        <button
-                                            onClick={() => deleteRawProduct(material._id)}
-                                            className="updated-btn updated-btn-danger"
-                                        >
-                                            Delete
-                                        </button>
-                                    </span>
+                                    <div className="serial-no">
+                                        <span>S.N.</span>
+                                        <span>{index + 1}</span>
+                                    </div>
+                                    <div className="name">
+                                        <span>Item name</span>
+                                        <span>{material.materialName}</span>
+                                    </div>
+                                    <div className="image">
+                                        <span>Image</span>
+                                        <span>
+                                            <img
+                                                src={material.imageUrl}
+                                                alt="Material"
+                                                className="updated-img-thumbnail"
+                                            />
+                                        </span>
+                                    </div>
+                                    <div className="description">
+                                        <span>Description</span>
+
+                                        <span>{material.description}</span>
+                                    </div>
+                                    <div className="quantity">
+                                        <span>Quantity</span>
+
+                                        <span>{material.quantity}</span>
+                                    </div>
+                                    <div className="color">
+                                        <span>Color</span>
+                                        <span>{material.color}</span>
+                                    </div>
+                                    <div className="action">
+                                        <span>Action</span>
+                                        <span className="btn">
+                                            <button
+                                                onClick={() => {
+                                                    setInOut(true);
+                                                    setProductId(material._id);
+                                                    setData(prev => ({ ...prev, ProductId: material._id }));
+                                                }}
+                                                className="updated-btn updated-btn-primary"
+                                            >
+                                                In Out
+                                            </button>
+                                            <button
+                                                onClick={() => deleteRawProduct(material._id)}
+                                                className="updated-btn updated-btn-danger"
+                                            >
+                                                Delete
+                                            </button>
+                                        </span>
+                                    </div>
                                     <div className="update-product">
                                         <img onClick={() => { setProductEdit((prev) => ({ ...prev, action: true })); setProductEdit((prev) => ({ ...prev, productId: material._id })) }} src={assets.edit_icon} alt="" />
                                     </div>

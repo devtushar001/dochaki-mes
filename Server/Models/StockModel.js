@@ -28,7 +28,7 @@ const StockSchema = new mongoose.Schema(
         },
         color: {
             type: String,
-            enum: ["Black", "White", "Red", "Blue", "Green", "Yellow"],
+            enum: ["Black", "White", "Red", "Blue", "Green", "Yellow", "Transparent", "Other"],
             default: "Black",
             trim: true
         }
