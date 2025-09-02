@@ -49,7 +49,6 @@ const Navbar = () => {
               Raw Item
             </li>
           </Link>
-
           <Link className="not-style" to="/raw-material-update">
             <li
               id={sidebar === "raw-update-list" ? "isActive" : ""}
@@ -83,19 +82,19 @@ const Navbar = () => {
       </div>
       <nav className="navbar">
         <div className="check-list">
-          <MdChecklist />
+          <Link to="/check-list" className="not-style" ><MdChecklist /></Link>
         </div>
         <div className="manage-stock">
-          <AiOutlineStock />
+          <Link to="/stock-material" className="not-style" ><AiOutlineStock /></Link>
         </div>
         <div className="dochaki-home">
-          <img src={assets.dochaki_logo} alt="" />
+          <Link to="/" className="not-style" ><img src={assets.dochaki_logo} alt="" /></Link>
         </div>
         <div className="manage-raw">
-          <BsFiletypeRaw />
+          <Link to="/raw-material" className="not-style" ><BsFiletypeRaw /></Link>
         </div>
         <div className="your-profile">
-          <CiUser />
+          <Link to="/my-profile" className="not-style" > <CiUser /></Link>
         </div>
       </nav>
 
