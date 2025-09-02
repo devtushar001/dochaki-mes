@@ -1,19 +1,17 @@
 /* 🌟 Base Styles */
 .updated-stock-material {
     font-family: Arial, Helvetica, sans-serif;
+    margin: 80px 0;
 }
 
 /* 🔹 Control Bar */
 .updated-stock-material .updated-controll-form-btn {
-    position: fixed;
-    inset: 70px 0 auto;
     display: grid;
     grid-template-columns: 1fr 170px;
     gap: 10px;
     padding: 20px;
     background: #fff;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.33);
-    z-index: 500;
 }
 
 .updated-stock-material .search-bar,
@@ -51,7 +49,6 @@
 
 /* 🔹 Table Container */
 .updated-stock-material .table-container {
-    margin-top: 200px;
     padding: 20px;
     overflow-x: auto;
     border: 1px solid #c4c4c4;
@@ -152,7 +149,6 @@
 
 /* 🔹 Add New Material Box */
 .updated-stock-material .updated-add-new-stock-material {
-    margin-top: 240px;
     display: flex;
     justify-content: center;
 }
