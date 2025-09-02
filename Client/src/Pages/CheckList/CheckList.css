@@ -1,0 +1,42 @@
+.checklist {
+    margin: 80px 0;
+    background: #e7edf1af;
+    height: 150vh;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Buttons container */
+.checklist .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    height: 35px;
+    width: 100%;
+}
+
+/* Common button styles */
+.checklist .buttons .raw,
+.checklist .buttons .stock {
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Individual buttons */
+.checklist .buttons .raw {
+    background: #d15400;
+}
+
+.checklist .buttons .stock {
+    background: #0061a1;
+}
+
+/* Active state (adds bottom border) */
+.checklist .buttons button.active {
+    opacity: 0.8;
+    color: #b3b3b3;
+}

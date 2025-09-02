@@ -104,6 +104,7 @@
   backdrop-filter: blur(10px);
   color: #fff;
   transition: all 0.3s ease-in-out;
+  z-index: 2;
 }
 
 /* Sidebar Open State */
