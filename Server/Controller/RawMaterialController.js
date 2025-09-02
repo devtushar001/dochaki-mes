@@ -50,16 +50,24 @@ export const AddRawMaterialController = async (req, res) => {
 export const getRawMaterialController = async (req, res) => {
     try {
         const searchQuery = req.query.query || "All";
-
+        const maxQty = parseInt(req.query.maxqty) || 0;
         console.log("Search Query:", searchQuery);
 
         let filter = {};
 
-        if (searchQuery !== "All") {
+        if (searchQuery !== "All" && searchQuery.trim() !== "" && maxQty === 0) {
             filter = {
                 $or: [
                     { materialName: { $regex: searchQuery, $options: "i" } },
                     { description: { $regex: searchQuery, $options: "i" } }
+                ]
+            };
+        }
+
+        if (maxQty > 0) {
+            filter = {
+                $or: [
+                    { quantity: { $lte: maxQty } },
                 ]
             };
         }

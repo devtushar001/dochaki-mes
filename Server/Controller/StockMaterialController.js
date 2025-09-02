@@ -59,9 +59,7 @@ export const getStockMaterialController = async (req, res) => {
     try {
         const searchQuery = req.query.query || "All";
         const maxQty = parseInt(req.query.maxqty) || 0;
-        console.log("Maximum Quantity:", maxQty);
 
-        console.log("Search Query:", searchQuery);
 
         let filter = {};
 
