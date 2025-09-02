@@ -78,6 +78,16 @@ const Navbar = () => {
               Stock Update List
             </li>
           </Link>
+
+          <Link className="not-style" to="/create-catalog">
+            <li
+              id={sidebar === "create-catalog" ? "isActive" : ""}
+              onClick={() => setSidebar("create-catalog")}
+              className="sidebar-menu-list"
+            >
+              Create catalog
+            </li>
+          </Link>
         </ul>
       </div>
       <nav className="navbar">

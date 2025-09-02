@@ -1,31 +1,31 @@
 import React from "react";
 import './Home.css';
 import { Link } from 'react-router-dom';
+import { assets } from "../../Assets/Assets";
 
 const Home = () => {
     return (
         <>
             <div className="home-container">
-                <div className="boxes">
-                    <div className="today-updated-raw-material">
-                        Today updated raw items
-                    </div>
-                    <div className="today-updated-stock-material">
-                        Today updated stock items
-                    </div>
-                    <div className="checkout-low-raw-items">
-                        Checkout low raw items
-                    </div>
-                    <div className="checkout-low-stock-items">
-                        Checkout low stock items
-                    </div>
-                    <div className="today-added-items">
-                        Listed new item
+                <div className="heading">
+                    <h2>Welcome to Dochaki MES </h2>
+                    <span>(Manufacturing Exicution System)</span>
+                </div>
+                <img src={assets.dochaki_logo} alt="" />
+                <p>Your one-stop solution for managing raw materials and stock efficiently.</p>
+                <p>List your product and update these according changes.</p>
+                <p>Also track your inventory in real-time and streamline your operations with ease.</p>
+                <p>Experience seamless inventory management with Dochaki MES.</p>
+                <div className="home-buttons">
+                    Manage your inventory with ease:
+                    <div className="button-group">
+                        <Link to="/raw-material" className="home-button">Manage Raw Materials</Link>
+                        <Link to="/stock-material" className="home-button">Manage Stock Materials</Link>
                     </div>
                 </div>
-                <div className="buttons">
-                    <Link to="/raw-material"><button className="raw">Raw</button></Link>
-                    <Link to="/stock-material"><button className="stock">Stock</button></Link>
+                <div className="developer">
+                    <p>Developed by: Tushar Chaudhary</p>
+                    <p>Contact: +91 999-325-3767</p>
                 </div>
             </div>
         </>
