@@ -8,7 +8,7 @@ export const AddStockMaterialController = async (req, res) => {
         if (!userData || !userData.access || !userData.isVerified) {
             return res.status(404).json({
                 success: false,
-                message: `You are not authenticated user.`
+                message: `Not a Dochaki MES Member? Contact developer.`
             })
         }
 
@@ -58,12 +58,14 @@ export const AddStockMaterialController = async (req, res) => {
 export const getStockMaterialController = async (req, res) => {
     try {
         const searchQuery = req.query.query || "All";
+        const maxQty = parseInt(req.query.maxqty) || 0;
+        console.log("Maximum Quantity:", maxQty);
 
         console.log("Search Query:", searchQuery);
 
         let filter = {};
 
-        if (searchQuery !== "All") {
+        if (searchQuery !== "All" && searchQuery.trim() !== "" && maxQty === 0) {
             filter = {
                 $or: [
                     { materialName: { $regex: searchQuery, $options: "i" } },
@@ -72,7 +74,20 @@ export const getStockMaterialController = async (req, res) => {
             };
         }
 
+        if (maxQty > 0) {
+            filter = {
+                $or: [
+                    { quantity: { $lte: maxQty } },
+                ]
+            };
+        }
+
+
+        const userData = await UserModel.findById(req.user);
+
         const rawMaterials = await StockModel.find(filter);
+
+        console.log(rawMaterials)
 
         return res.status(200).json({
             success: true,

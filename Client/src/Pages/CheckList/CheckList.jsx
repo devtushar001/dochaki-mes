@@ -6,13 +6,14 @@ const CheckList = () => {
     const { backend_url, rawMaterials, setRawMaterials, token, setLoginSignup } = useContext(MesContext);
     const [active, setActive] = useState("stock");
     const [qty, setQty] = useState(5); // Minimum quantity to check
+    const [fetching, setFetching] = useState([]);
 
 
 
     const fetchProduct = async () => {
         if (!token) setLoginSignup(true);
         try {
-            const res = await fetch(`${backend_url}/api/${active}-material/get?minqty=${qty}`, {
+            const res = await fetch(`${backend_url}/api/${active}-material/get?maxqty=${qty}`, {
                 method: 'GET',
                 headers: { 'Content-Type': "application/json", Authorization: `Bearer ${token}` }
             });
@@ -20,14 +21,12 @@ const CheckList = () => {
             if (!res.ok) throw new Error("Failed to fetch raw materials");
 
             const data = await res.json();
-            console.log(data);
             if (!data.success) {
                 toast.error(data.message);
                 return;
             }
 
-            setRawMaterials(data.data);
-            console.log(data.data)
+            setFetching(data.data);
         } catch (error) {
             toast.error(`${error.name}: ${error.message}`);
         }
@@ -58,9 +57,42 @@ const CheckList = () => {
                     Raw List
                 </button>
             </div>
+             <div className="quantity-input">
+                <label htmlFor="quantity">Set Minimum Quantity: </label>
+                <select
+                    id="quantity"
+                    value={qty}
+                    onChange={(e) => setQty(Number(e.target.value))}
+                >
+                    {Array.from({ length: 21 }, (_, i) => (
+                        <option key={i} value={i}>
+                            {i}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <div className="info">
                 {active === "stock" ? "Showing low stock items." : "Showing low raw items."}
             </div>
+            {fetching.length > 0 ? (
+                <>
+                    <div className="data-show">
+                        {fetching.map((item) => (
+                            <div className="data-item" key={item._id}>
+                                <div className="name">Name: {item.materialName}</div>
+                                <div className="desc">Description: {item.description}</div>
+                                <div className="color">Color: {item.color}</div>
+                                <div className="quantity">Quantity: {item.quantity}</div>
+                                <div className="id">Product ID: {item.productId}</div>
+                                {item.imageUrl && <img src={item.imageUrl} alt={item.materialName} />}
+                            </div>
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <div className="no-data">No items found with quantity less than or equal to {qty}.</div>
+            )}
+           
         </div>
     );
 };
