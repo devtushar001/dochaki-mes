@@ -188,6 +188,79 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.edit-in-out {
+    position: fixed;
+    top: 70px;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background: #f8fbffd7;
+    backdrop-filter: blur(8px);
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #000000;
+    height: auto;
+}
+
+.edit-in-out .container {
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+    position: relative;
+}
+
+.edit-in-out .container .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #c4c4c4;
+
+}
+
+.edit-in-out .container .header span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #ff0000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 0 0 0 10px;
+    cursor: pointer;
+
+}
+
+.edit-in-out .container .product-details {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.edit-in-out .container .input-system {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+}
+
+.edit-in-out .container .input-system select,
+.edit-in-out .container .input-system input {
+    height: 35px;
+}
+
+.edit-in-out .container button {
+    width: 100%;
+    height: 35px;
+    margin-top: 10px;
+    border: none;
+    background: #000;
+    cursor: pointer;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
 /* 📱 Responsive Breakpoints */
 @media (max-width: 992px) {
     .table-body {

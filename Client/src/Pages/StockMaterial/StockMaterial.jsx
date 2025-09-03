@@ -336,16 +336,21 @@ const UpdatedRawMaterial = () => {
             </div >
             {inOUt ? <div className="edit-in-out">
                 < div className="container" >
-                    <h2>Updating Stock!!!</h2>
-                    <div className="close" onClick={() => setInOut(false)}>X</div>
+                    <div className="header">
+                        <h2>Stock Update!!!</h2>
+                        <span className="close" onClick={() => setInOut(false)}>Close</span>
+                    </div>
                     {
                         rawMaterials.map((item, i) => {
                             if (item._id === productId) {
                                 return (
                                     <div key={i} className="product-details">
                                         <img style={{ maxWidth: "110px" }} src={item.imageUrl} alt="" />
-                                        <p>{item.materialName}&#44;</p>
-                                        <p>Current-Qty: {item.quantity}</p>
+                                        <div className="info">
+                                            <p>{item.materialName}&#44;</p>
+                                            <p>Current-Qty: {item.quantity}</p>
+                                            <p>Product Id: XXXX78945</p>
+                                        </div>
                                     </div>
                                 );
                             }
@@ -368,10 +373,10 @@ const UpdatedRawMaterial = () => {
                             <option value="offline">Return</option>
                             <option value="raw">New Material</option>
                         </select>
-                        <input onChange={(e) => setData(prev => ({ ...prev, message: e.target.value }))} type="text" placeholder="Enter address order details." />
+                        <input onChange={(e) => setData(prev => ({ ...prev, message: e.target.value }))} type="text" placeholder="Remark" />
                         <input onChange={(e) => setData((prev) => ({ ...prev, quantity: Number(e.target.value) }))} type="number" name="quantity" id="quantity" placeholder="Quantity" />
-                        <button onClick={updateRawMaterial}>Submit</button>
                     </div>
+                    <button onClick={updateRawMaterial}>Submit</button>
                 </div >
             </div > : <></>}
             {productEdit.action && (
