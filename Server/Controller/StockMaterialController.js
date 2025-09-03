@@ -85,7 +85,6 @@ export const getStockMaterialController = async (req, res) => {
 
         const rawMaterials = await StockModel.find(filter);
 
-        console.log(rawMaterials)
 
         return res.status(200).json({
             success: true,
@@ -141,7 +140,6 @@ export const deleteStockMaterialController = async (req, res) => {
 };
 
 export const updateStockMaterialController = async (req, res) => {
-    console.log(req.body)
     try {
         const { productId, materialName, description, color, quantity, imageUrl } = req.body;
 

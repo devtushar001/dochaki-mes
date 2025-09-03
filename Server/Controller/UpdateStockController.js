@@ -84,7 +84,6 @@ export const CreateUpdateStockController = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error.name + ":" + error.message)
         return res.status(500).json({
             success: false,
             message: "API encountered an internal error",
@@ -96,7 +95,6 @@ export const CreateUpdateStockController = async (req, res) => {
 export const GetUpdateStockController = async (req, res) => {
     try {
         const { date } = req.params;
-        console.log("Requested Date:", date);
 
         if (!date) {
             return res.status(400).json({

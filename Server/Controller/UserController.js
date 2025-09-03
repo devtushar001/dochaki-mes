@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const UserRegistrationController = async (req, res) => {
-    console.log(req.body)
     try {
         const { name, email, password } = req.body;
 
@@ -50,7 +49,6 @@ export const UserRegistrationController = async (req, res) => {
             });
 
     } catch (error) {
-        console.error("Registration Error:", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -59,9 +57,7 @@ export const UserOTPVerifyController = async (req, res) => {
     try {
         const { otp } = req.body;
         const userId = req.user;
-        console.log(userId, otp)
         const getUser = await UserModel.findById(userId);
-        console.log(getUser)
         if (!getUser) {
             return res.status(404).json({
                 success: false,
@@ -93,7 +89,6 @@ export const UserLoginController = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        console.log(email, password)
 
         if (!email || !password) {
             return res.status(400).json({ success: false, message: "Email and password are required." });
@@ -132,7 +127,6 @@ export const UserLoginController = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Login Error:", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -188,7 +182,6 @@ export const VerifyOtpController = async (req, res) => {
     try {
         const { otp } = req.body;
         const userId = req.user;
-        console.log(userId, otp)
         const getUser = await UserModel.findById(userId);
 
         if (!getUser) {
@@ -221,7 +214,6 @@ export const VerifyOtpController = async (req, res) => {
 export const GetUserDetailsController = async (req, res) => {
     try {
         const userId = req.user;
-        console.log(userId);
         if (!userId) {
             return res.status(400).json({
                 success: false,
@@ -244,7 +236,6 @@ export const GetUserDetailsController = async (req, res) => {
                 message: `Contact to developer to access all routess`
             })
         }
-        console.log(user)
         return res.status(200).json({
             success: true,
             message: "User details fetched successfully.",
@@ -262,7 +253,6 @@ export const GetUserDetailsController = async (req, res) => {
 export const GetAllUserController = async (req, res) => {
     try {
         const userId = req.user;
-        console.log("User ID:", userId);
 
         if (!userId) {
             return res.status(401).json({
@@ -272,7 +262,6 @@ export const GetAllUserController = async (req, res) => {
         }
 
         const adminUser = await UserModel.findById(userId);
-        console.log("Admin User:", adminUser);
 
         if (!adminUser || !adminUser.access || !adminUser.isVerified) {
             return res.status(403).json({
@@ -288,7 +277,6 @@ export const GetAllUserController = async (req, res) => {
             data: users,
         });
     } catch (error) {
-        console.error("Error fetching users:", error);
         res.status(500).json({
             success: false,
             message: "Failed to fetch users",
@@ -301,8 +289,6 @@ export const UserAccessController = async (req, res) => {
     try {
         const userId = req.user;
         const { personId } = req.body;
-        console.log(userId)
-        console.log(personId)
         if (!userId) {
             return res.status(400).json({
                 success: false,
@@ -351,8 +337,6 @@ export const UserDeleteController = async (req, res) => {
         const userId = req.user?.id || req.user; // Ensure userId is extracted correctly
         const { personId } = req.body;
 
-        console.log("Authenticated User ID:", userId);
-        console.log("Person to Delete ID:", personId);
 
         if (!userId) {
             return res.status(400).json({
@@ -400,7 +384,6 @@ export const UserDeleteController = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error in UserDeleteController:", error);
 
         return res.status(500).json({
             success: false,

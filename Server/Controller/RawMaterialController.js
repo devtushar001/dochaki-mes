@@ -2,7 +2,6 @@ import RawModel from "../Models/RawModel.js";
 import UserModel from "../Models/UserModel.js";
 
 export const AddRawMaterialController = async (req, res) => {
-    console.log(req.user)
     try {
         const { materialName, imageUrl, description, quantity, color } = req.body;
         const userData = await UserModel.findById(req.user);
@@ -51,7 +50,6 @@ export const getRawMaterialController = async (req, res) => {
     try {
         const searchQuery = req.query.query || "All";
         const maxQty = parseInt(req.query.maxqty) || 0;
-        console.log("Search Query:", searchQuery);
 
         let filter = {};
 

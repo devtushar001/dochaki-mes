@@ -9,7 +9,6 @@ export const CreateUpdateRawController = async (req, res) => {
         let { ProductId, changeType, quantity, issuedType, message } = req.body;
 
         const userData = await UserModel.findById(req.user);
-        console.log(userData);
         if (!userData || !userData.access || !userData.isVerified) {
             return res.status(404).json({
                 success: false,
@@ -88,7 +87,6 @@ export const CreateUpdateRawController = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error.name + ":" + error.message)
         return res.status(500).json({
             success: false,
             message: "API encountered an internal error",
@@ -100,7 +98,6 @@ export const CreateUpdateRawController = async (req, res) => {
 export const GetUpdateRawController = async (req, res) => {
     try {
         const { date } = req.params;
-        console.log("Requested Date:", date);
 
         if (!date) {
             return res.status(400).json({
