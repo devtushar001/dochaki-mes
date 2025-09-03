@@ -261,6 +261,10 @@
     border-radius: 10px;
 }
 
+.edit-window {
+    display: none;
+}
+
 /* 📱 Responsive Breakpoints */
 @media (max-width: 992px) {
     .table-body {
