@@ -81,33 +81,38 @@ const ImageUploader = ({ object, imageSelector }) => {
 
     return (
         <div className="image-uploader">
-            <button onClick={() => imageSelector((prev) => ({ ...prev, selection: false }))}>
-                Close
-            </button>
-
-            <div className="inputs">
-                <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-                <button onClick={handleUpload}>Upload</button>
-            </div>
-
-            <div className="outputs">
-                {images.length === 0 ? (
-                    <p>No images found.</p>
-                ) : (
-                    <div className="image-container">
-                        {images.map((img) => (
-                            <div className="single-image-grid" key={img._id}>
-                                <img src={img.imageUrl} alt="Uploaded" />
-                                <div className="buttons">
-                                    <button onClick={() => handleDelete(img._id)}>Delete</button>
-                                    <button onClick={() => handleImageSelect(img.imageUrl)}>
-                                        Use
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+            <div className="container">
+                <div className="action-options">
+                    <button onClick={() => imageSelector((prev) => ({ ...prev, selection: false }))}>
+                        Close
+                    </button>
+                    <div className="inputs">
+                        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+                        <button onClick={handleUpload}>Upload</button>
                     </div>
-                )}
+                </div>
+                <div className="outputs">
+                    {images.length === 0 ? (
+                        <p>No images found.</p>
+                    ) : (
+                        <div className="image-container">
+                            {images.map((img) => (
+                                <div className="single-image-grid" key={img._id}>
+                                    <img src={img.imageUrl} alt="Uploaded" />
+                                    <div className="buttons">
+                                        <button onClick={() => handleDelete(img._id)}>Delete</button>
+                                        <button onClick={() => {
+                                            imageSelector((prev) => ({ ...prev, selection: false }));
+                                            handleImageSelect(img.imageUrl);
+                                        }}>
+                                            Use
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
