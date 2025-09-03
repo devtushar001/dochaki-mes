@@ -210,6 +210,7 @@
     border: 1px solid #c4c4c4;
     padding: 10px;
     position: relative;
+    width: 90%;
 }
 
 .edit-in-out .container .header {
@@ -241,13 +242,13 @@
 
 .edit-in-out .container .input-system {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3px;
 }
 
 .edit-in-out .container .input-system select,
 .edit-in-out .container .input-system input {
-    height: 35px;
+    height: 25px;
 }
 
 .edit-in-out .container button {
