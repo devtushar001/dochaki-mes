@@ -48,14 +48,12 @@ const UpdatedRawMaterial = () => {
             }
 
             setRawMaterials(data.data);
-            console.log(data.data)
         } catch (error) {
             toast.error(`${error.name}: ${error.message}`);
         }
     };
 
     useEffect(() => {
-        console.log(searchQuery)
         fetchProduct();
     }, [backend_url, searchQuery]);
 
@@ -157,7 +155,7 @@ const UpdatedRawMaterial = () => {
             setInOut(false);
         } catch (error) {
             toast.error(`${error.name}: ${error.message}`);
-            console.error("Update error:", error);
+            throw new Error("Something got issue")
         }
     };
 
@@ -181,7 +179,6 @@ const UpdatedRawMaterial = () => {
                 },
                 body: JSON.stringify({ productId, ...rawData })
             });
-            console.log(res)
             if (!res.ok) throw new Error(`Something went wrong. Please check your console.`);
 
             const result = await res.json();
@@ -194,7 +191,7 @@ const UpdatedRawMaterial = () => {
             toast.success(result.message);
             fetchProduct(); // refresh the data
         } catch (error) {
-            console.error(error.name + ": " + error.message);
+            toast.error(error.name, error.message);
         }
     };
 

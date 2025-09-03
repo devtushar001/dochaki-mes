@@ -59,7 +59,7 @@ const Navbar = () => {
           <Link className="not-style" to="/raw-material-update">
             <li
               id={sidebar === "raw-update-list" ? "isActive" : ""}
-              onClick={() =>{ setSidebar("raw-update-list"); setMenuOpen(!menuOpen);}}
+              onClick={() => { setSidebar("raw-update-list"); setMenuOpen(!menuOpen); setMenuOpen(!menuOpen); }}
               className="sidebar-menu-list"
             >
               Updated raw list
@@ -69,7 +69,7 @@ const Navbar = () => {
           <Link className="not-style" to="/stock-material">
             <li
               id={sidebar === "stock-item" ? "isActive" : ""}
-              onClick={() => {setSidebar("stock-item");}}
+              onClick={() => { setSidebar("stock-item"); setMenuOpen(!menuOpen); }}
               className="sidebar-menu-list"
             >
               Stock item list
@@ -79,7 +79,7 @@ const Navbar = () => {
           <Link className="not-style" to="/stock-material-update">
             <li
               id={sidebar === "stock-update-list" ? "isActive" : ""}
-              onClick={() => setSidebar("stock-update-list")}
+              onClick={() => { setSidebar("stock-update-list"); setMenuOpen(!menuOpen); }}
               className="sidebar-menu-list"
             >
               Updated stock list
@@ -89,7 +89,7 @@ const Navbar = () => {
           <Link className="not-style" to="/create-catalog">
             <li
               id={sidebar === "create-catalog" ? "isActive" : ""}
-              onClick={() => setSidebar("create-catalog")}
+              onClick={() => { setSidebar("create-catalog"); setMenuOpen(!menuOpen); }}
               className="sidebar-menu-list"
             >
               Create catalog

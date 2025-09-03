@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import "./RawMaterialUpdate.css";
 import { MesContext } from "../../Context/MesContextProvider";
+import { toast } from "react-toastify";
 
 const RawMaterialUpdate = () => {
     const { readDate, backend_url, token } = useContext(MesContext);
@@ -27,7 +28,7 @@ const RawMaterialUpdate = () => {
             setFetchedData(result.data || []);
 
         } catch (error) {
-            console.error("Error fetching updates:", error.message);
+            toast.error(error.name, error.message);
         }
     }, [inputDate, backend_url]);
 

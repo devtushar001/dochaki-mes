@@ -18,10 +18,6 @@ const LoginSignUp = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log("User Data:", userData);
-    }, [userData]);
-
     const getUserData = async () => {
         if (!token) {
             setLoginSignup(true);
@@ -49,7 +45,8 @@ const LoginSignUp = () => {
             }
             setLoginSignup(false)
         } catch (error) {
-            toast.error("Failed to fetch user data. Please try again.");
+            toast.error(error.name, error.message);
+            throw new Error("Something got issue")
         }
     };
 
@@ -83,8 +80,8 @@ const LoginSignUp = () => {
             setToken(data.token); // Update context state
             localStorage.setItem("authToken", JSON.stringify(data.token));
         } catch (error) {
-            console.error("Error during registration:", error);
-            toast.error("Registration failed. Please try again.");
+            toast.error(error.name, error.message);
+            throw new Error("Something got issue")
         }
     };
 
@@ -118,8 +115,8 @@ const LoginSignUp = () => {
             navigate('/')
             localStorage.setItem("authToken", JSON.stringify(data.token));
         } catch (error) {
-            console.error("Error during login:", error);
-            toast.error("Login failed. Please try again.");
+            toast.error(error.name, error.message);
+            throw new Error("Something got issue")
         }
     };
 

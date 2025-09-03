@@ -8,10 +8,6 @@ const ImageUploader = ({ object, imageSelector }) => {
     const [images, setImages] = useState([]);
     const { backend_url } = useContext(MesContext);
 
-    useEffect(() => {
-        console.log(backend_url)
-    }, [])
-
     const fetchImages = async () => {
         try {
             const response = await fetch(`${backend_url}/api/images/image`);
@@ -20,8 +16,7 @@ const ImageUploader = ({ object, imageSelector }) => {
             const data = await response.json();
             setImages(data);
         } catch (error) {
-            console.error("Error fetching images:", error);
-            toast.error("Failed to load images");
+            toast.error(error.name, error.message);
         }
     };
 
@@ -67,8 +62,8 @@ const ImageUploader = ({ object, imageSelector }) => {
             toast.success("Image deleted successfully!");
             setImages((prev) => prev.filter((img) => img._id !== id));
         } catch (error) {
-            console.error("Delete error:", error);
-            toast.error("Failed to delete image");
+            toast.error(error.name, error.message);
+            throw new Error("Something got issue")
         }
     };
 

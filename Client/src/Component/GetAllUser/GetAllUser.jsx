@@ -28,11 +28,10 @@ const GetAllUser = () => {
                 return;
             }
 
-            setAllUser(data.data); // ✅ Only update state if request is successful
+            setAllUser(data.data); 
             toast.success("User data fetched successfully!");
         } catch (error) {
-            console.error("Error fetching user data:", error);
-            toast.error("Failed to fetch user data. Please try again.");
+            toast.error(error.name, error.message);
         }
     };
 
@@ -70,8 +69,7 @@ const GetAllUser = () => {
 
             toast.success(data.message || "User access updated successfully!");
         } catch (error) {
-            console.error("Error updating user access:", error);
-            toast.error("Failed to update user access. Please try again.");
+            toast.error(error.name, error.message);
         }
     };
 
@@ -101,8 +99,7 @@ const GetAllUser = () => {
 
             toast.warning(data.message || "User deleted successfully!");
         } catch (error) {
-            console.error("Error deleting user:", error);
-            toast.error("Failed to delete user. Please try again.");
+            toast.error(error.name, error.message);
         }
     };
 
@@ -136,8 +133,7 @@ const GetAllUser = () => {
 
             toast.info(data.message || "User access removed successfully!");
         } catch (error) {
-            console.error("Error removing user access:", error);
-            toast.error("Failed to remove user access. Please try again.");
+            toast.error(error.name, error.message);
         }
     };
 

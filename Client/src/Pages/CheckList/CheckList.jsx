@@ -46,18 +46,40 @@ const CheckList = () => {
     // PDF Download Function
     const downloadPDF = async () => {
         const input = pdfRef.current;
+
         const canvas = await html2canvas(input, {
             scale: 2,
             useCORS: true,
             allowTaint: true,
+            scrollY: -window.scrollY, // pura capture karega
         });
+
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        // Pehla page
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+
+        // Agar aur content bacha ho to naye page add karo
+        while (heightLeft > 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pdfHeight;
+        }
+
         pdf.save(`${active}-list.pdf`);
     };
+
 
     return (
         <div className="checklist">

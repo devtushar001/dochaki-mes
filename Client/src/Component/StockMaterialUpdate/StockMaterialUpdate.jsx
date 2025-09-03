@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, useCallback } from "react";
 import "./StockMaterialUpdate.css";
 import { Link } from "react-router-dom";
 import { MesContext } from "../../Context/MesContextProvider";
+import { toast } from "react-toastify";
 
 const StockMaterialUpdate = () => {
     const { readDate, backend_url, token } = useContext(MesContext);
@@ -27,7 +28,8 @@ const StockMaterialUpdate = () => {
             const result = await res.json();
             setFetchedData(result.data || []);
         } catch (error) {
-            console.error("Error fetching updates:", error.message);
+            toast.error(error.name, error.message)
+            throw new Error("Something got problem");
         }
     }, [inputDate, backend_url]);
 
