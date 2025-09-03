@@ -194,7 +194,6 @@
     bottom: 60px;
     left: 0;
     right: 0;
-    z-index: 2;
     background: #f8fbffd7;
     backdrop-filter: blur(8px);
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
