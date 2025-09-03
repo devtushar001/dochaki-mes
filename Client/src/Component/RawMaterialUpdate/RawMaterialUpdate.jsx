@@ -40,7 +40,7 @@ const RawMaterialUpdate = () => {
         <>
             <div className="recent-update">
                 <div className="filter-method">
-                    <h2>RECENT UPDATED RAW!!!</h2>
+                    <h2>Recent updated raw</h2>
                     <div className="date-selection">
                         <p>Select Date</p>
                         <input
@@ -58,13 +58,6 @@ const RawMaterialUpdate = () => {
                     <p>No recent updates available.</p>
                 ) : (
                     <div className="table">
-                        <div className="table-head">
-                            <span>Product Name</span>
-                            <span>Curr. Qty</span>
-                            <span>In/Out Qty</span>
-                            <span>Message</span>
-                            <span>Updated At</span>
-                        </div>
                         {fetchedData.map((update) => (
                             <>
                                 <div key={update._id} className="table-body">

@@ -33,7 +33,11 @@ const Navbar = () => {
           <Link className="not-style" to="/dashboard">
             <li
               id={sidebar === "dashboard" ? "isActive" : ""}
-              onClick={() => setSidebar("dashboard")}
+              onClick={() => {
+                setSidebar("dashboard");
+                setMenuOpen(!menuOpen);
+              }}
+
               className="sidebar-menu-list"
             >
               Dashboard
@@ -43,29 +47,32 @@ const Navbar = () => {
           <Link className="not-style" to="/raw-material">
             <li
               id={sidebar === "raw-item" ? "isActive" : ""}
-              onClick={() => setSidebar("raw-item")}
+              onClick={() => {
+                setSidebar("raw-item");
+                setMenuOpen(!menuOpen);
+              }}
               className="sidebar-menu-list"
             >
-              Raw Item
+              Raw item list
             </li>
           </Link>
           <Link className="not-style" to="/raw-material-update">
             <li
               id={sidebar === "raw-update-list" ? "isActive" : ""}
-              onClick={() => setSidebar("raw-update-list")}
+              onClick={() =>{ setSidebar("raw-update-list"); setMenuOpen(!menuOpen);}}
               className="sidebar-menu-list"
             >
-              Raw Update List
+              Updated raw list
             </li>
           </Link>
 
           <Link className="not-style" to="/stock-material">
             <li
               id={sidebar === "stock-item" ? "isActive" : ""}
-              onClick={() => setSidebar("stock-item")}
+              onClick={() => {setSidebar("stock-item");}}
               className="sidebar-menu-list"
             >
-              Stock Item
+              Stock item list
             </li>
           </Link>
 
@@ -75,7 +82,7 @@ const Navbar = () => {
               onClick={() => setSidebar("stock-update-list")}
               className="sidebar-menu-list"
             >
-              Stock Update List
+              Updated stock list
             </li>
           </Link>
 

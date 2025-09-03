@@ -40,7 +40,7 @@ const StockMaterialUpdate = () => {
         <>
             <div className="recent-update">
                 <div className="filter-method">
-                    <h2>RECENT UPDATED STOCK!!!</h2>
+                    <h2>Recent updated stocks</h2>
                     <div className="date-selection">
                         <p>Select Date</p>
                         <input
@@ -58,24 +58,17 @@ const StockMaterialUpdate = () => {
                     <p>No recent updates available.</p>
                 ) : (
                     <div className="table">
-                        <div className="table-head">
-                            <span>Product Name</span>
-                            <span>Curr. Qty</span>
-                            <span>In/Out Qty</span>
-                            <span>Message</span>
-                            <span>Updated At</span>
-                        </div>
                         {fetchedData.map((update) => (
                             <>
                                 <div key={update._id} className="table-body">
-                                    <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                                         <img style={{ maxWidth: "45px" }} src={update.ProductData.image} alt="" />
                                         {update.ProductData.name}
-                                    </span>
-                                    <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>{update.currentQuantity} Current Quantity</span>
-                                    <span style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>{update.quantity} {update.changeType} </span>
-                                    <span>{update.message}</span>
-                                    <span>{readDate(update.updatedAt)}</span>
+                                    </div>
+                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>Current Qty : {update.currentQuantity} </div>
+                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>Change Type : {update.quantity} {update.changeType} </div>
+                                    <div>Remark : {update.message}</div>
+                                    <div>Updated Time : {readDate(update.updatedAt)}</div>
                                 </div>
                                 <hr />
                             </>
