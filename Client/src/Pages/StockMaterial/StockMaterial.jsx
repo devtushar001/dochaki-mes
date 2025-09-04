@@ -16,7 +16,8 @@ const UpdatedRawMaterial = () => {
         imageUrl: "",
         description: "",
         quantity: 0,
-        color: ""
+        color: "",
+        productId: "",
     });
     const [searchQuery, setSearchQuery] = useState("All");
 
@@ -238,6 +239,7 @@ const UpdatedRawMaterial = () => {
                                 name="description"
                                 placeholder="Searching keyword"
                             />
+                            <input value={rawData.productId} onChange={handleChange} style={{ height: "35px" }} type="text" placeholder="Enter product id or Create" />
                             <div className="updated-material-info">
                                 <input
                                     value={rawData.quantity}
