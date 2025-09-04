@@ -37,7 +37,7 @@
 .image-uploader .container .inputs {
   margin-top: 15px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
 }
 
 .image-uploader .action-options button:hover {
@@ -54,6 +54,7 @@
   padding: 5px;
   border-radius: 5px;
   font-size: 14px;
+  max-width: 220px;
 }
 
 .image-uploader .outputs {
