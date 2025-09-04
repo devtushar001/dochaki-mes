@@ -25,6 +25,12 @@ const RawSchema = new mongoose.Schema(
             type: String,
             default: "Black",
             trim: true
+        },
+        productId: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true
         }
     },
     { timestamps: true }

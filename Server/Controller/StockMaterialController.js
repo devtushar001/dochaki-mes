@@ -2,27 +2,29 @@ import StockModel from "../Models/StockModel.js";
 import UserModel from "../Models/UserModel.js";
 export const AddStockMaterialController = async (req, res) => {
     try {
-        ;
-        const { materialName, imageUrl, description, quantity, color } = req.body;
-        const userData = await UserModel.findById(req.user);
-        if (!userData || !userData.access || !userData.isVerified) {
+        const userId = req.user?.id || req.user?._id || req.user;
+        const { materialName, imageUrl, description, quantity, color, productId } = req.body;
+
+        const userData = await UserModel.findById(userId);
+
+        if (!userData) {
             return res.status(404).json({
                 success: false,
-                message: `Not a Dochaki MES Member? Contact developer.`
-            })
+                message: "User not found."
+            });
         }
 
-        if (!userData || !userData.isVerified || !userData.access) {
-            return res.status(400).json({
+        if (!userData.isVerified || !userData.access) {
+            return res.status(403).json({
                 success: false,
-                message: `You have no access to edit these things.`
-            })
+                message: "You have no access for these routes."
+            });
         }
 
-        if (!materialName) {
+        if (!materialName || !productId) {
             return res.status(400).json({
                 success: false,
-                message: "Material name is required."
+                message: "Product name and id is required."
             });
         }
 
@@ -36,9 +38,9 @@ export const AddStockMaterialController = async (req, res) => {
         const newRawProduct = await StockModel.create({
             materialName,
             imageUrl: imageUrl || "https://surl.li/raobve",
-            description,
-            quantity,
-            color
+            description: description || "",
+            quantity: quantity || 0,
+            color: color || ""
         });
 
         return res.status(201).json({
@@ -54,6 +56,7 @@ export const AddStockMaterialController = async (req, res) => {
         });
     }
 };
+
 
 export const getStockMaterialController = async (req, res) => {
     try {

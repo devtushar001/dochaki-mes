@@ -286,6 +286,12 @@ const UpdatedRawMaterial = () => {
                                             />
                                         </span>
                                     </div>
+                                    <div className="product-id">
+                                        <span>Product id</span>
+                                        <span>
+                                            {material.productId ? material.productId : "Id not mentioned."}
+                                        </span>
+                                    </div>
                                     <div className="description">
                                         <span>Description</span>
                                         <span>{material.description}</span>

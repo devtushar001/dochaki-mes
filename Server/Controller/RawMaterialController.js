@@ -15,7 +15,7 @@ export const AddRawMaterialController = async (req, res) => {
         if (!materialName || !productId) {
             return res.status(400).json({
                 success: false,
-                message: "Product name or id required."
+                message: "Product name and id required."
             });
         }
 

@@ -31,6 +31,12 @@ const StockSchema = new mongoose.Schema(
             enum: ["Black", "White", "Red", "Blue", "Green", "Yellow", "Transparent", "Other"],
             default: "Black",
             trim: true
+        },
+        productId: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true
         }
     },
     { timestamps: true }
