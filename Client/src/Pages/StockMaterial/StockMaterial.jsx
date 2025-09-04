@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import './StockMaterial.css';
+import "./StockMaterial.css";
 import ImageUploader from "../../Component/ImageUploader/ImageUploader";
 import { MesContext } from "../../Context/MesContextProvider";
 import { toast } from "react-toastify";
@@ -7,10 +7,15 @@ import { assets } from "../../Assets/Assets";
 
 const UpdatedRawMaterial = () => {
     const [addNew, setAddNew] = useState(false);
-    const [inOUt, setInOut] = useState(false);
+    const [inOut, setInOut] = useState(false);
     const [productId, setProductId] = useState("");
-    const { backend_url, rawMaterials, setRawMaterials, token, setLoginSignup } = useContext(MesContext);
-    const [productImage, setProductImage] = useState({ type: "single", selection: false, image: null });
+    const { backend_url, rawMaterials, setRawMaterials, token, setLoginSignup } =
+        useContext(MesContext);
+    const [productImage, setProductImage] = useState({
+        type: "single",
+        selection: false,
+        image: null,
+    });
     const [rawData, setRawData] = useState({
         materialName: "",
         imageUrl: "",
@@ -21,32 +26,33 @@ const UpdatedRawMaterial = () => {
     });
     const [searchQuery, setSearchQuery] = useState("All");
 
-
     const [data, setData] = useState({
         ProductId: "",
         changeType: "in",
         saleType: "default",
         message: "",
-        quantity: 0
+        quantity: 0,
     });
 
-    const [productEdit, setProductEdit] = useState(false)
+    const [productEdit, setProductEdit] = useState({ action: false, productId: "" });
 
+    // Fetch products
     const fetchProduct = async () => {
-        if (!token) setLoginSignup(true);
+        if (!token) return setLoginSignup(true);
+
         try {
-            const res = await fetch(`${backend_url}/api/stock-material/get?query=${searchQuery}`, {
-                method: 'GET',
-                headers: { 'Content-Type': "application/json", Authorization: `Bearer ${token}` }
-            });
+            const res = await fetch(
+                `${backend_url}/api/stock-material/get?query=${searchQuery}`,
+                {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                }
+            );
 
             if (!res.ok) throw new Error("Failed to fetch raw materials");
 
             const data = await res.json();
-            if (!data.success) {
-                toast.error(data.message);
-                return;
-            }
+            if (!data.success) return toast.error(data.message);
 
             setRawMaterials(data.data);
         } catch (error) {
@@ -58,23 +64,21 @@ const UpdatedRawMaterial = () => {
         fetchProduct();
     }, [backend_url, searchQuery]);
 
+    // Create product
     const createRawProduct = async () => {
-        if (!token) setLoginSignup(true)
+        if (!token) return setLoginSignup(true);
+
         try {
             const res = await fetch(`${backend_url}/api/stock-material/create`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify(rawData)
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify(rawData),
             });
 
             if (!res.ok) throw new Error("Failed to create product");
 
             const data = await res.json();
-
-            if (!data.success) {
-                toast.error(data.message);
-                return;
-            }
+            if (!data.success) return toast.error(data.message);
 
             setRawMaterials((prev) => [...prev, data.data]);
 
@@ -86,31 +90,23 @@ const UpdatedRawMaterial = () => {
         }
     };
 
+    // Delete product
     const deleteRawProduct = async (id) => {
-        const confirmed = window.confirm(`Are you sure you want to delete the image with ID: ${id}?`);
+        const confirmed = window.confirm(`Delete product with ID: ${id}?`);
         if (!confirmed) return;
 
-        if (!token) {
-            setLoginSignup(true);
-            return;
-        }
-        if (!token) setLoginSignup(true)
+        if (!token) return setLoginSignup(true);
+
         try {
             const res = await fetch(`${backend_url}/api/stock-material/delete/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
+                method: "DELETE",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             });
 
             if (!res.ok) throw new Error("Failed to delete product");
 
             const data = await res.json();
-            if (!data.success) {
-                toast.error(data.message);
-                return;
-            }
+            if (!data.success) return toast.error(data.message);
 
             fetchProduct();
         } catch (error) {
@@ -118,95 +114,86 @@ const UpdatedRawMaterial = () => {
         }
     };
 
+    // Sync image with rawData
     useEffect(() => {
         if (productImage.image) {
             setRawData((prev) => ({ ...prev, imageUrl: productImage.image }));
         }
     }, [productImage.image]);
 
+    // Handle form inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setRawData((prev) => ({ ...prev, [name]: value }));
     };
 
+    // Update stock quantity (in/out)
     const updateRawMaterial = async () => {
-        if (!token) setLoginSignup(true);
+        if (!token) return setLoginSignup(true);
+
         try {
             const res = await fetch(`${backend_url}/api/stock-material-update/update`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(data)
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify(data),
             });
 
-            if (!res.ok) {
-                throw new Error("Something went wrong while updating raw material");
-            }
+            if (!res.ok) throw new Error("Error updating stock");
 
             const result = await res.json();
+            if (!result.success) return toast.error(result.message);
 
-            if (!result.success) {
-                toast.error(result.message);
-                return;
-            }
             fetchProduct();
-            setData((prev) => ({ ...prev, changeType: "in" }))
+            setData((prev) => ({ ...prev, changeType: "in" }));
             setInOut(false);
         } catch (error) {
             toast.error(`${error.name}: ${error.message}`);
-            throw new Error("Something got issue")
         }
     };
 
-    const updateStockProductsData = async (productId) => {
-        if (!productId) {
-            return alert(`Product ID not provided`);
-        }
-
-        if (!token) {
-            alert(`Please login before editing product details`);
-            setLoginSignup(true);
-            return;
-        }
+    // Update stock item details
+    const updateStockProductsData = async (id) => {
+        if (!id) return alert("Product ID not provided");
+        if (!token) return setLoginSignup(true);
 
         try {
             const res = await fetch(`${backend_url}/api/stock-material/update`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({ productId, ...rawData })
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ productId: id, ...rawData }),
             });
-            if (!res.ok) throw new Error(`Something went wrong. Please check your console.`);
+
+            if (!res.ok) throw new Error("Failed to update product");
 
             const result = await res.json();
-
-            if (!result.success) {
-                alert(result.message);
-                return;
-            }
+            if (!result.success) return toast.error(result.message);
 
             toast.success(result.message);
-            fetchProduct(); // refresh the data
+            fetchProduct();
+            setProductEdit({ action: false, productId: "" });
         } catch (error) {
-            toast.error(error.name, error.message);
+            toast.error(`${error.name}: ${error.message}`);
         }
     };
-
 
     return (
         <>
             <div className="updated-stock-material">
-
+                {/* Search + Add */}
                 <div className="updated-controll-form-btn">
-                    <input className="search-bar" style={{ paddingLeft: "12px" }} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Search item" />
+                    <input
+                        className="search-bar"
+                        style={{ paddingLeft: "12px" }}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        type="text"
+                        placeholder="Search item"
+                    />
                     <button onClick={() => setAddNew(!addNew)}>
-                        {!addNew ? "Add New Product" : "Close"}
+                        {addNew ? "Close" : "Add New Product"}
                     </button>
                 </div>
+
+                {/* Add new product form */}
                 {addNew && (
                     <div className="updated-add-new-stock-material">
                         <div className="box">
@@ -233,13 +220,22 @@ const UpdatedRawMaterial = () => {
                             {productImage.selection && (
                                 <ImageUploader object={productImage} imageSelector={setProductImage} />
                             )}
+
                             <textarea
                                 value={rawData.description}
                                 onChange={handleChange}
                                 name="description"
-                                placeholder="Searching keyword"
+                                placeholder="Description / keywords"
                             />
-                            <input value={rawData.productId} onChange={handleChange} style={{ height: "35px" }} type="text" placeholder="Enter product id or Create" />
+                            <input
+                                value={rawData.productId}
+                                style={{ height: "35px" }}
+                                onChange={handleChange}
+                                name="productId"
+                                type="text"
+                                placeholder="Enter product id or Create"
+                            />
+
                             <div className="updated-material-info">
                                 <input
                                     value={rawData.quantity}
@@ -264,13 +260,14 @@ const UpdatedRawMaterial = () => {
                     </div>
                 )}
 
-                {!addNew && (
-                    rawMaterials.length === 0 ? (
+                {/* Product List */}
+                {!addNew &&
+                    (rawMaterials.length === 0 ? (
                         <p>No stock materials available. Please add one.</p>
                     ) : (
                         <div className="table-container">
                             {rawMaterials.map((material, index) => (
-                                <div className="table-body">
+                                <div className="table-body" key={material._id}>
                                     <div className="serial-no">
                                         <span>S.N.</span>
                                         <span>{index + 1}</span>
@@ -291,12 +288,10 @@ const UpdatedRawMaterial = () => {
                                     </div>
                                     <div className="description">
                                         <span>Description</span>
-
                                         <span>{material.description}</span>
                                     </div>
                                     <div className="quantity">
                                         <span>Quantity</span>
-
                                         <span>{material.quantity}</span>
                                     </div>
                                     <div className="color">
@@ -310,7 +305,7 @@ const UpdatedRawMaterial = () => {
                                                 onClick={() => {
                                                     setInOut(true);
                                                     setProductId(material._id);
-                                                    setData(prev => ({ ...prev, ProductId: material._id }));
+                                                    setData((prev) => ({ ...prev, ProductId: material._id }));
                                                 }}
                                                 className="updated-btn updated-btn-primary"
                                             >
@@ -325,90 +320,96 @@ const UpdatedRawMaterial = () => {
                                         </span>
                                     </div>
                                     <div className="update-product">
-                                        <img onClick={() => { setProductEdit((prev) => ({ ...prev, action: true })); setProductEdit((prev) => ({ ...prev, productId: material._id })) }} src={assets.edit_icon} alt="" />
+                                        <img
+                                            onClick={() => setProductEdit({ action: true, productId: material._id })}
+                                            src={assets.edit_icon}
+                                            alt="edit"
+                                        />
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    )
-                )}
-            </div >
-            {inOUt ? <div className="edit-in-out">
-                < div className="container" >
-                    <div className="header">
-                        <h2>Stock Update!!!</h2>
-                        <span className="close" onClick={() => setInOut(false)}>Close</span>
-                    </div>
-                    {
-                        rawMaterials.map((item, i) => {
-                            if (item._id === productId) {
-                                return (
-                                    <div key={i} className="product-details">
-                                        <img style={{ maxWidth: "110px" }} src={item.imageUrl} alt="" />
-                                        <div className="info">
-                                            <p>{item.materialName}&#44;</p>
-                                            <p>Current-Qty: {item.quantity}</p>
-                                            <p>Product Id: XXXX78945</p>
-                                        </div>
+                    ))}
+            </div>
+
+            {/* In/Out Modal */}
+            {inOut && (
+                <div className="edit-in-out">
+                    <div className="container">
+                        <div className="header">
+                            <h2>Stock Update!!!</h2>
+                            <span className="close" onClick={() => setInOut(false)}>
+                                Close
+                            </span>
+                        </div>
+                        {rawMaterials
+                            .filter((item) => item._id === productId)
+                            .map((item) => (
+                                <div key={item._id} className="product-details">
+                                    <img style={{ maxWidth: "110px" }} src={item.imageUrl} alt="" />
+                                    <div className="info">
+                                        <p>{item.materialName},</p>
+                                        <p>Current-Qty: {item.quantity}</p>
+                                        <p>Product Id: {item.productId}</p>
                                     </div>
-                                );
-                            }
-                        })
-                    }
-                    <div className="input-system">
-                        <select
-                            onChange={(e) => setData(prev => ({ ...prev, changeType: e.target.value }))}
-                            name="update-type"
-                            id="update-type"
-                        >
-                            <option value="in">in</option>
-                            <option value="out">out</option>
-                        </select>
-                        <select name="sale-type" id="sale-type" onChange={(e) => setData(prev => ({ ...prev, saleType: e.target.value }))}>
-                            <option value="dealership">Website</option>
-                            <option value="amazon">Amazon</option>
-                            <option value="flipkart">Dealership</option>
-                            <option value="dmototech">Direct Sale</option>
-                            <option value="offline">Return</option>
-                            <option value="raw">New Material</option>
-                        </select>
-                        <input onChange={(e) => setData(prev => ({ ...prev, message: e.target.value }))} type="text" placeholder="Remark" />
-                        <input onChange={(e) => setData((prev) => ({ ...prev, quantity: Number(e.target.value) }))} type="number" name="quantity" id="quantity" placeholder="Quantity" />
-                    </div>
-                    <button onClick={updateRawMaterial}>Submit</button>
-                </div >
-            </div > : <></>}
-            {productEdit.action && (
-                <div className="edit-window">
-                    {rawMaterials.map((item) =>
-                        item._id === productEdit.productId ? (
-                            <div key={item._id} className="editing-box-container">
-                                <div className="close">X</div>
-                                <div className="div">
-                                    <span>Product Image</span> <img style={{ width: "40px" }} src={item.imageUrl} alt="" />
-                                    <span>Material Name</span> <input type="text" value={item.materialName} />
-                                    <span>Color </span><input type="text" value={item.color} />
-                                    <span>Quantity </span><input type="text" value={item.quantity} />
-                                    <span>Material Name</span> <textarea type="text" value={item.description} ></textarea>
                                 </div>
-                            </div>
-                        ) : null
-                    )}
+                            ))}
+
+                        <div className="input-system">
+                            <select
+                                onChange={(e) => setData((prev) => ({ ...prev, changeType: e.target.value }))}
+                            >
+                                <option value="in">in</option>
+                                <option value="out">out</option>
+                            </select>
+                            <select
+                                onChange={(e) => setData((prev) => ({ ...prev, saleType: e.target.value }))}
+                            >
+                                <option value="dealership">Website</option>
+                                <option value="amazon">Amazon</option>
+                                <option value="flipkart">Dealership</option>
+                                <option value="dmototech">Direct Sale</option>
+                                <option value="offline">Return</option>
+                                <option value="raw">New Material</option>
+                            </select>
+                            <input
+                                onChange={(e) => setData((prev) => ({ ...prev, message: e.target.value }))}
+                                type="text"
+                                placeholder="Remark"
+                            />
+                            <input
+                                onChange={(e) => setData((prev) => ({ ...prev, quantity: Number(e.target.value) }))}
+                                type="number"
+                                placeholder="Quantity"
+                            />
+                        </div>
+                        <button onClick={updateRawMaterial}>Submit</button>
+                    </div>
                 </div>
             )}
+
+            {/* Edit Modal */}
             {productEdit.action && (
                 <div className="edit-window">
-                    {rawMaterials.map((item) =>
-                        item._id === productEdit.productId ? (
+                    {rawMaterials
+                        .filter((item) => item._id === productEdit.productId)
+                        .map((item) => (
                             <div key={item._id} className="editing-box-container">
-                                <div onClick={() => setProductEdit((prev) => ({ ...prev, action: false }))} className="close">X</div>
+                                <div
+                                    onClick={() => setProductEdit({ action: false, productId: "" })}
+                                    className="close"
+                                >
+                                    X
+                                </div>
                                 <div className="div">
                                     <span>Product Image</span>
                                     <img src={item.imageUrl} alt="Product" />
 
                                     <span>Material Name</span>
                                     <input
-                                        onChange={(e) => setRawData((prev) => ({ ...prev, materialName: e.target.value }))}
+                                        onChange={(e) =>
+                                            setRawData((prev) => ({ ...prev, materialName: e.target.value }))
+                                        }
                                         value={rawData.materialName || item.materialName}
                                         type="text"
                                         placeholder="Material name"
@@ -422,7 +423,7 @@ const UpdatedRawMaterial = () => {
                                         placeholder="Color"
                                     />
 
-                                    <span>Searching Keywords</span>
+                                    <span>Description</span>
                                     <textarea
                                         style={{ fontFamily: "Arial" }}
                                         onChange={(e) => setRawData((prev) => ({ ...prev, description: e.target.value }))}
@@ -430,11 +431,11 @@ const UpdatedRawMaterial = () => {
                                         placeholder="Description"
                                     />
                                 </div>
-
-                                <button className="btn-submit" onClick={() => updateStockProductsData(item._id)}>Edit Stock Item</button>
+                                <button className="btn-submit" onClick={() => updateStockProductsData(item._id)}>
+                                    Edit Stock Item
+                                </button>
                             </div>
-                        ) : null
-                    )}
+                        ))}
                 </div>
             )}
         </>

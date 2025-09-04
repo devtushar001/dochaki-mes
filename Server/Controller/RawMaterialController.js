@@ -3,7 +3,8 @@ import UserModel from "../Models/UserModel.js";
 
 export const AddRawMaterialController = async (req, res) => {
     try {
-        const { materialName, imageUrl, description, quantity, color } = req.body;
+        console.log(req.body);
+        const { materialName, imageUrl, description, quantity, color, productId } = req.body;
         const userData = await UserModel.findById(req.user);
         if (!userData || !userData.access || !userData.isVerified) {
             return res.status(404).json({
@@ -11,10 +12,10 @@ export const AddRawMaterialController = async (req, res) => {
                 message: `You are not authenticated user.`
             })
         }
-        if (!materialName) {
+        if (!materialName || !productId) {
             return res.status(400).json({
                 success: false,
-                message: "Material name is required."
+                message: "Product name or id required."
             });
         }
 
@@ -29,7 +30,8 @@ export const AddRawMaterialController = async (req, res) => {
             imageUrl: imageUrl || "https://surl.li/raobve",
             description,
             quantity,
-            color
+            color,
+            productId
         });
 
         return res.status(201).json({
