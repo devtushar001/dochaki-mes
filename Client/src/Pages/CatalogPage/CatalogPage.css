@@ -1,5 +1,5 @@
 .catalog-page {
-  margin: 100px auto;
+  margin: 80px auto;
 }
 
 .catalog-page .controll-section {
@@ -26,4 +26,8 @@
 .catalog-page .controll-section button:focus {
   outline: none;
   background-color: #d0d0d0;
+}
+
+.catalog-page .content-section {
+  margin-top: 50px;
 }

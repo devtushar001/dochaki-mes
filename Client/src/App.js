@@ -12,8 +12,8 @@ import StockMaterialUpdate from './Component/StockMaterialUpdate/StockMaterialUp
 import RawMaterialUpdate from './Component/RawMaterialUpdate/RawMaterialUpdate';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import CheckList from './Pages/CheckList/CheckList';
-import CatalogForm from './Pages/Catalog/CatalogForm';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
+import NotFound from './Pages/NotFound/NotFound';
 
 function App() {
   const { loginSignup, setLoginSignup } = useContext(MesContext);
@@ -31,9 +31,8 @@ function App() {
           <Route path='/raw-material-update' element={<RawMaterialUpdate />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/check-list' element={<CheckList />} />
-          <Route path='/catalog' element={<CatalogForm />} />
-          <Route path='/catalog-page' element={<CatalogPage />} />
-          {/* <Route path='*' element={<h1 style={{ marginTop: "90px", fontFamily: "Arial" }}>404 Not Found</h1>} /> */}
+          <Route path='/catalog' element={<CatalogPage />} />
+          <Route path='*' element={<NotFound/>} />
         </Routes>
         <ToastContainer />
       </div>
