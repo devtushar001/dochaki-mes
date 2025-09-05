@@ -6,16 +6,13 @@ import StockMaterial from './Pages/StockMaterial/StockMaterial';
 import LoginSignUp from './Pages/LoginSignUp/LoginSignUp';
 import Navbar from './Component/Navbar/Navbar';
 import { ToastContainer } from 'react-toastify';
-import InRawProduct from './Component/InRawProduct/InRawProduct';
 import { useContext } from 'react';
 import { MesContext } from './Context/MesContextProvider';
-import Sidebar from './Component/Sidebar/Sidebar';
-import UpdatedRawMaterial from './Pages/StockMaterial/StockMaterial';
 import StockMaterialUpdate from './Component/StockMaterialUpdate/StockMaterialUpdate';
 import RawMaterialUpdate from './Component/RawMaterialUpdate/RawMaterialUpdate';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import CheckList from './Pages/CheckList/CheckList';
-import Catalog from './Pages/Catalog/Catalog';
+import CatalogForm from './Pages/Catalog/CatalogForm';
 
 function App() {
   const { loginSignup, setLoginSignup } = useContext(MesContext);
@@ -33,7 +30,7 @@ function App() {
           <Route path='/raw-material-update' element={<RawMaterialUpdate />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/check-list' element={<CheckList />} />
-          <Route path='/catalog' element={<Catalog/>} />
+          <Route path='/catalog' element={<CatalogForm/>} />
         </Routes>
         <ToastContainer />
       </div>
