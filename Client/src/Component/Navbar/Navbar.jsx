@@ -2,15 +2,13 @@ import React, { useContext, useState } from "react";
 import "./Navbar.css";
 // import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { assets } from "../../Assets/Assets";
-import { CiMenuFries } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { MdChecklist } from "react-icons/md";
 import { AiOutlineStock } from "react-icons/ai";
 import { BsFiletypeRaw } from "react-icons/bs";
 import { CiUser } from "react-icons/ci";
 import { CiMenuKebab } from "react-icons/ci";
-import MesContextProvider, { MesContext } from "../../Context/MesContextProvider";
-import Sidebar from "../Sidebar/Sidebar";
+import  { MesContext } from "../../Context/MesContextProvider";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -93,6 +91,15 @@ const Navbar = () => {
               className="sidebar-menu-list"
             >
               Create catalog
+            </li>
+          </Link>
+          <Link className="not-style" to="/not-found">
+            <li
+              id={sidebar === "not-found" ? "isActive" : ""}
+              onClick={() => { setSidebar("not-found"); setMenuOpen(!menuOpen); }}
+              className="sidebar-menu-list"
+            >
+              Not Found
             </li>
           </Link>
         </ul>
