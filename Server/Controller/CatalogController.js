@@ -1,12 +1,28 @@
 import { CatalogModel } from "../Models/CatalogModel.js";
 import validator from "validator";
+import UserModel from "../Models/UserModel.js";
+import sanitizeHtml from "sanitize-html";
 
 export const AddCatalogController = async (req, res) => {
+    // console.log(req.body);
     try {
         const userId = req.user?.id || req.user?._id || req.user;
         const userData = await UserModel.findById(userId);
+        if (!userData) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found."
+            });
+        }
 
-        const {
+        if (!userData.isVerified || !userData.access) {
+            return res.status(403).json({
+                success: false,
+                message: "You have no access for these routes."
+            });
+        }
+
+        let {
             productId,
             productName,
             imageUrl,
@@ -40,19 +56,6 @@ export const AddCatalogController = async (req, res) => {
         materialType = sanitizeHtml(materialType || "").trim();
 
 
-        if (!userData) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found."
-            });
-        }
-
-        if (!userData.isVerified || !userData.access) {
-            return res.status(403).json({
-                success: false,
-                message: "You have no access for these routes."
-            });
-        }
 
         // Validation checks
         if (!productId || !productName || !category) {
@@ -115,6 +118,7 @@ export const AddCatalogController = async (req, res) => {
         });
 
     } catch (error) {
+        console.log(error.name, error.message);
         return res.status(400).json({
             success: false,
             message: `${error.name}: ${error.message}`,

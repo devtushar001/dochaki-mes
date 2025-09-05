@@ -1,18 +1,20 @@
 // CatalogPage.jsx
-import React from "react";
+import React, { useContext } from "react";
 // import CatalogForm from "../Forms/CatalogForm/CatalogForm"; 
 import CatalogForm from "../Catalog/CatalogForm"; // Correct import path for CatalogForm
 import "./CatalogPage.css";
+import { MesContext } from "../../Context/MesContextProvider";
 
 
 const CatalogPage = () => {
+    const { token } = useContext(MesContext);
     // Ye function form ka payload lega
     const handleFormSubmit = async (data) => {
         console.log(data);
         try {
-            const res = await fetch("http://localhost:5000/api/catalog", {
+            const res = await fetch("http://localhost:10019/api/product-catalog/add", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                 body: JSON.stringify(data),
             });
 
@@ -32,7 +34,7 @@ const CatalogPage = () => {
     };
 
     return (
-        <div className="catalog-page"> 
+        <div className="catalog-page">
             <div className="controll-section">
                 <button>Catalog</button>
                 <button>Import</button>

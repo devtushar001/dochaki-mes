@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import sanitizeHtml from "sanitize-html";
-
+import UserModel from './UserModel.js';
 const sanitizeInput = (value) => {
     if (typeof value !== "string") return value;
     return sanitizeHtml(value, {
@@ -136,7 +136,7 @@ const productCatalogSchema = new mongoose.Schema(
         // Tracking
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "Users",
         },
     },
     { timestamps: true }
