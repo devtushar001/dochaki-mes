@@ -15,6 +15,7 @@ import StockMaterialUpdate from './Component/StockMaterialUpdate/StockMaterialUp
 import RawMaterialUpdate from './Component/RawMaterialUpdate/RawMaterialUpdate';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import CheckList from './Pages/CheckList/CheckList';
+import Catalog from './Pages/Catalog/Catalog';
 
 function App() {
   const { loginSignup, setLoginSignup } = useContext(MesContext);
@@ -32,6 +33,7 @@ function App() {
           <Route path='/raw-material-update' element={<RawMaterialUpdate />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/check-list' element={<CheckList />} />
+          <Route path='/catalog' element={<Catalog/>} />
         </Routes>
         <ToastContainer />
       </div>

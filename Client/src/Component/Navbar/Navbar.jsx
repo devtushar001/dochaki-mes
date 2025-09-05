@@ -86,7 +86,7 @@ const Navbar = () => {
             </li>
           </Link>
 
-          <Link className="not-style" to="/create-catalog">
+          <Link className="not-style" to="/catalog">
             <li
               id={sidebar === "create-catalog" ? "isActive" : ""}
               onClick={() => { setSidebar("create-catalog"); setMenuOpen(!menuOpen); }}
