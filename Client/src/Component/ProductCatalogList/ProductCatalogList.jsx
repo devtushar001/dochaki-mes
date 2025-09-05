@@ -7,7 +7,7 @@ const ProductCatalogList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const { token } = useContext(MesContext);
+    const { token, readDate } = useContext(MesContext);
 
     // API fetch
     useEffect(() => {
@@ -50,15 +50,68 @@ const ProductCatalogList = () => {
                             {p.imageUrl && (
                                 <img src={p.imageUrl} alt={p.productName} className="product-img" />
                             )}
-                            <h3>{p.productName}</h3>
-                            <p><strong>SKU:</strong> {p.sku}</p>
-                            <p><strong>Category:</strong> {p.category}</p>
-                            <p><strong>Price:</strong> ₹{p.sellingPrice}</p>
-                            <p><strong>Stock:</strong> {p.quantityInStock}</p>
+
+                            <h3>
+                                {p.brand} {p.productName}
+                            </h3>
+
+                            <p>
+                                <strong>Product Id:</strong> {p.productId}
+                            </p>
+
+                            <p>
+                                <strong>Color Options:</strong>{" "}
+                                {p.colorOptions && p.colorOptions.length > 0 ? (
+                                    p.colorOptions.map((color, idx) => (
+                                        <span
+                                            key={idx}
+                                            style={{
+                                                background: "rgba(214, 214, 214, 0.71)",
+                                                borderRadius: "10px",
+                                                padding: "1px 6px",
+                                                marginRight: "4px",
+                                            }}
+                                        >
+                                            {color}
+                                        </span>
+                                    ))
+                                ) : (
+                                    "—"
+                                )}
+                            </p>
+
+                            <p>
+                                <strong>Category:</strong> {p.category}
+                            </p>
+                            <p>
+                                <strong>Selling Price:</strong> ₹{p.sellingPrice}
+                            </p>
+                            <p>
+                                <strong>Dealer Price:</strong> ₹{p.dealerPrice}
+                            </p>
+                            <p>
+                                <strong>Amazon Price:</strong> ₹{p.amazonPrice}
+                            </p>
+                            <p>
+                                <strong>Flipkart Price:</strong> ₹{p.flipkartPrice}
+                            </p>
+                            <p>
+                                <strong>Meesho Price:</strong> ₹{p.meeshoPrice}
+                            </p>
+
+                            <p>
+                                <strong>Stock:</strong> {p.quantityInStock}
+                            </p>
+
+                            <hr />
+                            <div className="time" style={{ fontSize: "12px" }}>
+                                {readDate(p.updatedAt)}
+                            </div>
                         </div>
                     ))}
                 </div>
             )}
+
         </div>
     );
 };
