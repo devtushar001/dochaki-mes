@@ -1,7 +1,7 @@
 // CatalogPage.jsx
 import React, { useContext, useState } from "react";
 // import CatalogForm from "../Forms/CatalogForm/CatalogForm"; 
-import CatalogForm from "../Catalog/CatalogForm"; // Correct import path for CatalogForm
+import CatalogForm from "../../Component/CatalogForm/CatalogForm"; // Correct import path for CatalogForm
 import "./CatalogPage.css";
 import { MesContext } from "../../Context/MesContextProvider";
 import ProductCatalogList from "../../Component/ProductCatalogList/ProductCatalogList";

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./CatalogForm.css";
-import ImageUploader from "../../Component/ImageUploader/ImageUploader";
+import ImageUploader from "../ImageUploader/ImageUploader";
 
 const defaultData = {
    productId: "",
