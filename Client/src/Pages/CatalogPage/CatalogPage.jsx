@@ -8,13 +8,13 @@ import ProductCatalogList from "../../Component/ProductCatalogList/ProductCatalo
 
 
 const CatalogPage = () => {
-    const { token } = useContext(MesContext);
+    const { token, backend_url } = useContext(MesContext);
     const [tabs, setTabs] = useState("catalog")
     // Ye function form ka payload lega
     const handleFormSubmit = async (data) => {
         console.log(data);
         try {
-            const res = await fetch("http://localhost:10019/api/product-catalog/add", {
+            const res = await fetch(`${backend_url}/api/product-catalog/add`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                 body: JSON.stringify(data),

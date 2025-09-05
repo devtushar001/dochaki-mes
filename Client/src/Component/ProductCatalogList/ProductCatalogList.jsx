@@ -7,25 +7,26 @@ const ProductCatalogList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const { token, readDate } = useContext(MesContext);
+    const { token, readDate, backend_url } = useContext(MesContext);
+
 
     // API fetch
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch("http://localhost:10019/api/product-catalog/get", {
+                const res = await fetch(`${backend_url}/api/product-catalog/get`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
 
                 });
                 const data = await res.json();
-                console.log(data)
                 if (res.ok) {
                     setProducts(data.data || []); // assuming backend sends { products: [...] }
                 } else {
                     setError(data.message || "Failed to fetch products");
                 }
             } catch (err) {
+
                 setError("Server not reachable");
             } finally {
                 setLoading(false);
