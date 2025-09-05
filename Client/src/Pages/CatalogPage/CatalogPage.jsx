@@ -1,13 +1,15 @@
 // CatalogPage.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 // import CatalogForm from "../Forms/CatalogForm/CatalogForm"; 
 import CatalogForm from "../Catalog/CatalogForm"; // Correct import path for CatalogForm
 import "./CatalogPage.css";
 import { MesContext } from "../../Context/MesContextProvider";
+import ProductCatalogList from "../../Component/ProductCatalogList/ProductCatalogList";
 
 
 const CatalogPage = () => {
     const { token } = useContext(MesContext);
+    const [tabs, setTabs] = useState("catalog")
     // Ye function form ka payload lega
     const handleFormSubmit = async (data) => {
         console.log(data);
@@ -36,12 +38,10 @@ const CatalogPage = () => {
     return (
         <div className="catalog-page">
             <div className="controll-section">
-                <button>Catalog</button>
-                <button>Import</button>
-                <button>Export</button>
-                <button>Print</button>
+                <button onClick={() => setTabs("catalog")}>Catalog List</button>
+                <button onClick={() => setTabs("add-catalog")}>Add New Item</button>
             </div>
-            <CatalogForm onSubmit={handleFormSubmit} />
+            {tabs == "catalog" ? <ProductCatalogList /> : <CatalogForm onSubmit={handleFormSubmit} />}
         </div>
     );
 };
