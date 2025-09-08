@@ -142,6 +142,4 @@ const productCatalogSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export const CatalogModel =
-    mongoose.models.ProductCatalog ||
-    mongoose.model("ProductCatalog", productCatalogSchema);
+export const CatalogModel = mongoose.models.ProductCatalog || mongoose.model("ProductCatalog", productCatalogSchema);
