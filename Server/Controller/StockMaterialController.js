@@ -36,6 +36,7 @@ export const AddStockMaterialController = async (req, res) => {
         }
 
         const newRawProduct = await StockModel.create({
+            productId,
             materialName,
             imageUrl: imageUrl || "https://surl.li/raobve",
             description: description || "",

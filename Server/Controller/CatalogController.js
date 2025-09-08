@@ -4,7 +4,7 @@ import UserModel from "../Models/UserModel.js";
 import sanitizeHtml from "sanitize-html";
 
 export const AddCatalogController = async (req, res) => {
-    // console.log(req.body);
+    console.log(req.body);
     try {
         const userId = req.user?.id || req.user?._id || req.user;
         const userData = await UserModel.findById(userId);
