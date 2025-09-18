@@ -10,7 +10,7 @@ const StockSchema = new mongoose.Schema(
         },
         imageUrl: {
             type: String,
-            default: "https://res.cloudinary.com/ddiwvmwzg/image/upload/v1742300773/mern-uploads/horrbcetabmixipiok2i.jpg"
+            default: "https://res.cloudinary.com/ddiwvmwzg/image/upload/v1758194698/mern-uploads/hptboju4okasteftsz4g.png"
         },
         description: {
             type: String,

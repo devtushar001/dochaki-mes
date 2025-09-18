@@ -27,7 +27,7 @@ const productCatalogSchema = new mongoose.Schema(
         },
         imageUrl: {
             type: String,
-            default: "https://surl.li/raobve",
+            default: "https://res.cloudinary.com/ddiwvmwzg/image/upload/v1758194698/mern-uploads/hptboju4okasteftsz4g.png",
             validate: {
                 validator: (v) => validator.isURL(v),
                 message: "Invalid image URL",

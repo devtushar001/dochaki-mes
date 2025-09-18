@@ -38,7 +38,7 @@ export const AddStockMaterialController = async (req, res) => {
         const newRawProduct = await StockModel.create({
             productId,
             materialName,
-            imageUrl: imageUrl || "https://surl.li/raobve",
+            imageUrl: imageUrl || "https://res.cloudinary.com/ddiwvmwzg/image/upload/v1758194698/mern-uploads/hptboju4okasteftsz4g.png",
             description: description || "",
             quantity: quantity || 0,
             color: color || ""
