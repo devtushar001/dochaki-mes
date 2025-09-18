@@ -29,7 +29,7 @@ export const uploadImageController = async (req, res) => {
 
 export const getImageController = async (req, res) => {
     try {
-        const images = await imageModel.find().select("imageUrl publicId");
+        const images = await imageModel.find().select("imageUrl publicId").sort({ createdAt: -1 });
 
         if (!images.length) {
             return res.status(404).json({ message: "No images found" });
