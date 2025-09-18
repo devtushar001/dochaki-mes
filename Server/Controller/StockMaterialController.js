@@ -87,7 +87,7 @@ export const getStockMaterialController = async (req, res) => {
 
         const userData = await UserModel.findById(req.user);
 
-        const rawMaterials = await StockModel.find(filter);
+        const rawMaterials = await StockModel.find(filter).sort({ createdAt: -1 });
 
 
         return res.status(200).json({

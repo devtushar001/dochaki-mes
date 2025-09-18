@@ -72,7 +72,7 @@ export const getRawMaterialController = async (req, res) => {
             };
         }
 
-        const rawMaterials = await RawModel.find(filter);
+        const rawMaterials = await RawModel.find(filter).sort({ createdAt: -1 });
 
         return res.status(200).json({
             success: true,

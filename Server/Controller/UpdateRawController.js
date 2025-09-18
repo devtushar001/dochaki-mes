@@ -64,7 +64,7 @@ export const CreateUpdateRawController = async (req, res) => {
             ProductData: {
                 productId: rawProduct._id,
                 name: rawProduct.materialName,
-                image: rawProduct.imageUrl || "https://surl.li/raobve"
+                image: rawProduct.imageUrl || "https://res.cloudinary.com/ddiwvmwzg/image/upload/v1758194698/mern-uploads/hptboju4okasteftsz4g.png"
             },
             changeType,
             issuedType,
