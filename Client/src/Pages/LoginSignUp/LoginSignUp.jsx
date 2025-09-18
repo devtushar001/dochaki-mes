@@ -7,7 +7,7 @@ import { assets } from "../../Assets/Assets";
 
 const LoginSignUp = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const { backend_url, token, setToken, setLoginSignup, setUserName } = useContext(MesContext);
+    const { backend_url, token, setToken, setLoginSignup, setUserName, userDetails, setUserDetails } = useContext(MesContext);
     const [otp, setOtp] = useState(false);
     const [userData, setUserData] = useState({
         name: "",
@@ -41,9 +41,11 @@ const LoginSignUp = () => {
             setUserName(data.data.name);
             if (!data.success) {
                 setLoginSignup(true);
-                navigate("/");
             }
+            setUserDetails(data.data);
+            toast.success(data.message);
             setLoginSignup(false)
+            navigate("/");
         } catch (error) {
             toast.error(error.name, error.message);
             throw new Error("Something got issue")

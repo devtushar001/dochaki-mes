@@ -14,6 +14,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import CheckList from './Pages/CheckList/CheckList';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
 import NotFound from './Pages/NotFound/NotFound';
+import MyProfile from './Pages/MyProfile/MyProfile';
 
 function App() {
   const { loginSignup, setLoginSignup } = useContext(MesContext);
@@ -32,7 +33,8 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/check-list' element={<CheckList />} />
           <Route path='/catalog' element={<CatalogPage />} />
-          <Route path='*' element={<NotFound/>} />
+          <Route path='/my-profile' element={<MyProfile />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <ToastContainer />
       </div>
