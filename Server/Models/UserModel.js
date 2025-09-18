@@ -25,8 +25,16 @@ const UserSchema = new mongoose.Schema({
     access: {
         type: Boolean,
         default: false,
+    },
+    userProfile: {
+        type: String,
+        default: ""
+    },
+    userId: {
+        type: String,
+        default: Math.floor(Math.random() * 100000)
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 const UserModel = mongoose.models.Users || mongoose.model("Users", UserSchema);
 
