@@ -1,145 +1,132 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import sanitizeHtml from "sanitize-html";
-import UserModel from './UserModel.js';
+import UserModel from "./UserModel.js"; // optional import if used for relation
+
+// Sanitize string inputs to prevent HTML/script injection
 const sanitizeInput = (value) => {
     if (typeof value !== "string") return value;
     return sanitizeHtml(value, {
-        allowedTags: [], // No HTML allowed
+        allowedTags: [],
         allowedAttributes: {},
     }).trim();
 };
 
-const productCatalogSchema = new mongoose.Schema(
+const CatalogSchema = new mongoose.Schema(
     {
-        productId: {
+        productCode: {
             type: String,
-            required: true,
+            required: [true, "Product code is required"],
             unique: true,
             trim: true,
             set: sanitizeInput,
         },
         productName: {
             type: String,
-            required: true,
+            required: [true, "Product name is required"],
             trim: true,
             set: sanitizeInput,
         },
-        imageUrl: {
+        category: {
             type: String,
-            default: "https://res.cloudinary.com/ddiwvmwzg/image/upload/v1758194698/mern-uploads/hptboju4okasteftsz4g.png",
-            validate: {
-                validator: (v) => validator.isURL(v),
-                message: "Invalid image URL",
-            },
+            required: [true, "Category is required"],
+            set: sanitizeInput,
+        },
+        compatibleModel: {
+            type: String,
+            default: "",
+            set: sanitizeInput,
         },
         description: {
             type: String,
+            default: "",
             set: sanitizeInput,
         },
-
-        // Costing & Pricing
-        manufacturingCost: {
-            type: Number,
-            required: true,
-            min: [0, "Manufacturing cost cannot be negative"],
-        },
-        dealerPrice: {
-            type: Number,
-            required: true,
-            min: [0, "Dealer price cannot be negative"],
-        },
-        sellingPrice: {
-            type: Number,
-            required: true,
-            min: [0, "Selling price cannot be negative"],
-        },
-        amazonPrice: {
-            type: Number,
-            min: [0, "Amazon price cannot be negative"],
-        },
-        flipkartPrice: {
-            type: Number,
-            min: [0, "Flipkart price cannot be negative"],
-        },
-        meeshoPrice: {
-            type: Number,
-            min: [0, "Meesho price cannot be negative"],
-        },
-
-        // Inventory
-        quantityInStock: {
-            type: Number,
-            default: 0,
-            min: [0, "Stock cannot be negative"],
-        },
-        minOrderQuantity: {
-            type: Number,
-            default: 1,
-            min: [1, "Min order must be at least 1"],
-        },
-
-        // Category & Branding
-        category: {
+        material: {
             type: String,
-            required: true,
-            trim: true,
+            default: "",
             set: sanitizeInput,
         },
-        brand: {
+        finish: {
             type: String,
-            trim: true,
+            default: "",
             set: sanitizeInput,
         },
-        sku: {
-            type: String,
-            unique: true,
-            sparse: true,
-            set: sanitizeInput,
-        },
-        barcode: {
-            type: String,
-            unique: true,
-            sparse: true,
-            set: sanitizeInput,
-        },
-
-        // Extra fields
         dimensions: {
-            length: { type: Number, min: 0 },
-            width: { type: Number, min: 0 },
-            height: { type: Number, min: 0 },
+            type: String,
+            default: "",
+            set: sanitizeInput,
         },
         weight: {
             type: Number,
+            default: 0,
             min: [0, "Weight cannot be negative"],
         },
-        colorOptions: {
-            type: [String],
-            set: (arr) => arr.map(sanitizeInput),
+        tradePrice: {
+            type: Number,
+            required: [true, "Trade price is required"],
+            min: [0, "Trade price cannot be negative"],
         },
-        materialType: {
+        gstPercent: {
+            type: Number,
+            default: 18,
+            min: [0, "GST cannot be negative"],
+            max: [100, "GST cannot exceed 100%"],
+        },
+        mrp: {
+            type: Number,
+            required: [true, "MRP is required"],
+            min: [0, "MRP cannot be negative"],
+        },
+        stockStatus: {
             type: String,
+            enum: ["In Stock", "Out of Stock", "Made to Order"],
+            default: "In Stock",
+        },
+        listingPlatforms: {
+            type: [String],
+            default: [],
+            validate: {
+                validator: (arr) => Array.isArray(arr),
+                message: "Listing platforms must be an array of strings",
+            },
+        },
+        imageUrl: {
+            type: String,
+            default: "",
+            trim: true,
+            validate: {
+                validator: (v) => !v || validator.isURL(v),
+                message: "Invalid image URL",
+            },
+        },
+        dateAdded: {
+            type: Date,
+            default: Date.now,
+        },
+        remarks: {
+            type: String,
+            default: "",
             set: sanitizeInput,
         },
-
-        // Flags
-        isActive: {
-            type: Boolean,
-            default: true,
-        },
-        isFeatured: {
-            type: Boolean,
-            default: false,
-        },
-
-        // Tracking
+        // Optional: link to the user who created it (if you use authentication)
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Users",
+            ref: "User",
+            default: null,
         },
     },
-    { timestamps: true }
+    {
+        timestamps: true, // Adds createdAt and updatedAt fields
+    }
 );
 
-export const CatalogModel = mongoose.models.ProductCatalog || mongoose.model("ProductCatalog", productCatalogSchema);
+// 🔹 Optional: Pre-save validation — ensure MRP ≥ Trade Price
+CatalogSchema.pre("save", function (next) {
+    if (this.mrp < this.tradePrice) {
+        return next(new Error("MRP cannot be less than trade price"));
+    }
+    next();
+});
+
+export const CatalogModel = mongoose.models.Product || mongoose.model("Product", CatalogSchema);

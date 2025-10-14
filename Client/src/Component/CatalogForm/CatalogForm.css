@@ -1,187 +1,146 @@
-/* Base */
-.catalog-form {
-  --bg: #ffffff;
-  --card: #f7f9fc;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --primary: #0f766e;
-  --primary-dark: #115e59;
-  --error: #dc2626;
-
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px;
-  max-width: 980px;
-  box-shadow: 0 6px 24px rgba(16, 24, 40, 0.06);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+.product-form-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 35px 45px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
 }
 
-/* Header */
-.cf-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
+.product-form-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.8rem;
 }
 
-.cf-head h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.cf-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.cf-btn {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #fff;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.cf-btn.primary {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-}
-
-.cf-btn.primary:hover {
-  background: var(--primary-dark);
-}
-
-/* Sections */
-.cf-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-  margin-top: 14px;
-}
-
-.cf-section h3 {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  color: var(--muted);
-}
-
-/* Grid */
-.cf-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 12px;
-}
-
-.cf-field {
-  grid-column: span 6;
+.product-form {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 25px;
 }
 
-.cf-field.full {
-  grid-column: 1 / -1;
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 25px;
 }
 
-.cf-field.url {
-  grid-column: span 8;
-}
-
-.cf-field label {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.cf-field small {
-  color: var(--error);
-}
-
-.cf-field input,
-.cf-field textarea {
-  border: 1px solid var(--border);
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 0.95rem;
-  color: var(--text);
-  outline: none;
-}
-
-.cf-field textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-/* error state */
-.cf-field.error input,
-.cf-field.error textarea {
-  border-color: var(--error);
-}
-
-/* Image preview */
-.cf-image-preview {
-  margin-top: 10px;
-  background: #fff;
-  border: 1px dashed var(--border);
-  border-radius: 10px;
-  padding: 10px;
-  display: inline-block;
-}
-
-.cf-image-preview img {
-  display: block;
-  max-width: 240px;
-  max-height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* Switches */
-.cf-field.switches {
-  grid-column: 1 / -1;
+.form-grid label {
   display: flex;
-  gap: 16px;
-  align-items: center;
+  flex-direction: column;
+  font-size: 14px;
+  color: #444;
 }
 
-.cf-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Responsive */
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.span-two {
+  grid-column: span 2;
+}
+
+.submit-btn {
+  align-self: center;
+  background: #007bff;
+  color: white;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* ✅ RESPONSIVE STYLES */
+
+/* Tablets (≤ 900px) */
 @media (max-width: 900px) {
+  .product-form-container {
+    padding: 30px;
+    max-width: 95%;
+  }
 
-  .cf-field,
-  .cf-field.url {
-    grid-column: span 12;
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .span-two {
+    grid-column: span 1;
+  }
+
+  .product-form-container h2 {
+    font-size: 1.6rem;
   }
 }
 
-@media (max-width: 540px) {
-  .catalog-form {
-    padding: 14px;
+/* Mobile (≤ 600px) */
+@media (max-width: 600px) {
+  .product-form-container {
+    padding: 20px;
+    margin: 20px;
+    border-radius: 12px;
   }
 
-  .cf-head {
-    flex-direction: column;
-    align-items: flex-start;
+  .product-form-container h2 {
+    font-size: 1.4rem;
   }
 
-  .cf-actions {
-    align-self: stretch;
+  .form-grid label {
+    font-size: 13px;
   }
 
-  .cf-actions .cf-btn {
-    flex: 1;
+  .form-grid input,
+  .form-grid select,
+  .form-grid textarea {
+    font-size: 13px;
+    padding: 9px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+  }
+}
+
+/* Very small screens (≤ 400px) */
+@media (max-width: 400px) {
+  .product-form-container {
+    padding: 15px;
+  }
+
+  .product-form-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .submit-btn {
+    font-size: 14px;
   }
 }

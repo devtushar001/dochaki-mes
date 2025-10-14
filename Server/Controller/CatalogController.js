@@ -4,67 +4,56 @@ import UserModel from "../Models/UserModel.js";
 import sanitizeHtml from "sanitize-html";
 
 export const AddCatalogController = async (req, res) => {
-    console.log(req.body);
     try {
+        console.log("Incoming Data:", req.body);
+
+        //  Step 1: Authenticate User
         const userId = req.user?.id || req.user?._id || req.user;
         const userData = await UserModel.findById(userId);
         if (!userData) {
             return res.status(404).json({
                 success: false,
-                message: "User not found."
+                message: "User not found.",
             });
         }
 
         if (!userData.isVerified || !userData.access) {
             return res.status(403).json({
                 success: false,
-                message: "You have no access for these routes."
+                message: "You have no access for this route.",
             });
         }
 
+        //  Step 2: Extract fields from request body
         let {
-            productId,
+            productCode,
             productName,
-            imageUrl,
-            description,
-            manufacturingCost,
-            dealerPrice,
-            sellingPrice,
-            amazonPrice,
-            flipkartPrice,
-            meeshoPrice,
-            quantityInStock,
-            minOrderQuantity,
             category,
-            brand,
-            sku,
-            barcode,
+            compatibleModel,
+            description,
+            material,
+            finish,
             dimensions,
             weight,
-            colorOptions,
-            materialType,
+            tradePrice,
+            gstPercent,
+            mrp,
+            stockStatus,
+            listingPlatforms,
+            imageUrl,
+            dateAdded,
+            remarks,
         } = req.body;
 
-        // Sanitize string inputs to prevent XSS
-        productId = sanitizeHtml(productId || "").trim();
-        productName = sanitizeHtml(productName || "").trim();
-        description = sanitizeHtml(description || "").trim();
-        category = sanitizeHtml(category || "").trim();
-        brand = sanitizeHtml(brand || "").trim();
-        sku = sanitizeHtml(sku || "").trim();
-        barcode = sanitizeHtml(barcode || "").trim();
-        materialType = sanitizeHtml(materialType || "").trim();
-
-
-
-        // Validation checks
-        if (!productId || !productName || !category) {
+        //  Step 3: Validate required fields
+        if (!productCode || !productName || !category) {
             return res.status(400).json({
                 success: false,
-                message: "Product ID, Name and Category are required.",
+                message: "Product Code, Name, and Category are required.",
             });
         }
 
+        //  Step 4: Validate data types and values
         if (imageUrl && !validator.isURL(imageUrl)) {
             return res.status(400).json({
                 success: false,
@@ -72,45 +61,67 @@ export const AddCatalogController = async (req, res) => {
             });
         }
 
-        if (manufacturingCost < 0 || dealerPrice < 0 || sellingPrice < 0) {
+        if (tradePrice < 0 || mrp < 0) {
             return res.status(400).json({
                 success: false,
-                message: "Prices cannot be negative.",
+                message: "Price values cannot be negative.",
             });
         }
 
-        if (quantityInStock < 0) {
+        if (weight < 0) {
             return res.status(400).json({
                 success: false,
-                message: "Stock quantity cannot be negative.",
+                message: "Weight cannot be negative.",
             });
         }
 
-        // Create new product
+        if (gstPercent < 0 || gstPercent > 100) {
+            return res.status(400).json({
+                success: false,
+                message: "GST percentage must be between 0 and 100.",
+            });
+        }
+
+        //  Step 5: Prevent duplicate productCode
+        const existingProduct = await CatalogModel.findOne({ productCode });
+        if (existingProduct) {
+            return res.status(400).json({
+                success: false,
+                message: "Product with this code already exists.",
+            });
+        }
+
+        //  Step 6: Format listing platforms (comma-separated → array)
+        if (typeof listingPlatforms === "string") {
+            listingPlatforms = listingPlatforms
+                .split(",")
+                .map((p) => p.trim())
+                .filter(Boolean);
+        }
+
+        //  Step 7: Create new product
         const newProduct = await CatalogModel.create({
-            productId,
+            productCode,
             productName,
-            imageUrl,
-            description,
-            manufacturingCost,
-            dealerPrice,
-            sellingPrice,
-            amazonPrice,
-            flipkartPrice,
-            meeshoPrice,
-            quantityInStock,
-            minOrderQuantity,
             category,
-            brand,
-            sku,
-            barcode,
+            compatibleModel,
+            description,
+            material,
+            finish,
             dimensions,
             weight,
-            colorOptions,
-            materialType,
-            createdBy: req.user ? req.user._id : null, // Agar login user system hai
+            tradePrice,
+            gstPercent,
+            mrp,
+            stockStatus,
+            listingPlatforms,
+            imageUrl,
+            dateAdded: dateAdded || new Date(),
+            remarks,
+            createdBy: userId,
         });
 
+        //  Step 8: Send response
         return res.status(201).json({
             success: true,
             message: "Product added to catalog successfully!",
@@ -118,13 +129,14 @@ export const AddCatalogController = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error.name, error.message);
-        return res.status(400).json({
+        console.error("AddCatalogController Error:", error);
+        return res.status(500).json({
             success: false,
-            message: `${error.name}: ${error.message}`,
+            message: `Server Error: ${error.message}`,
         });
     }
 };
+
 
 
 export const FetchCatalogController = async (req, res) => {
