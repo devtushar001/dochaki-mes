@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CatalogForm.css";
+import ImageUploader from "../ImageUploader/ImageUploader";
 
 const CatalogForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -21,13 +22,51 @@ const CatalogForm = ({ onSubmit }) => {
     remarks: "",
   });
 
+  const [productImage, setProductImage] = useState({
+    type: "single",
+    selection: false,
+    image: null,
+  });
+
+  useEffect(() => {
+    console.log(productImage);
+  }, [productImage])
+
+  const [errors, setErrors] = useState({});
+
+  // Update imageUrl when productImage changes
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, imageUrl: productImage.image || "" }));
+  }, [productImage.image]);
+
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Validate form
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.productCode.trim()) newErrors.productCode = "Product code is required";
+    if (!formData.productName.trim()) newErrors.productName = "Product name is required";
+    if (!formData.category.trim()) newErrors.category = "Category is required";
+    if (formData.weight < 0) newErrors.weight = "Weight cannot be negative";
+    if (formData.tradePrice < 0) newErrors.tradePrice = "Trade Price cannot be negative";
+    if (formData.mrp < 0) newErrors.mrp = "MRP cannot be negative";
+    if (formData.gstPercent < 0 || formData.gstPercent > 100) newErrors.gstPercent = "GST must be 0-100";
+    return newErrors;
+  };
+
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     const data = {
       ...formData,
       listingPlatforms: formData.listingPlatforms
@@ -35,6 +74,7 @@ const CatalogForm = ({ onSubmit }) => {
         .map((p) => p.trim())
         .filter(Boolean),
     };
+
     onSubmit && onSubmit(data);
   };
 
@@ -52,6 +92,7 @@ const CatalogForm = ({ onSubmit }) => {
               onChange={handleChange}
               required
             />
+            {errors.productCode && <span className="error">{errors.productCode}</span>}
           </label>
 
           <label>
@@ -63,6 +104,7 @@ const CatalogForm = ({ onSubmit }) => {
               onChange={handleChange}
               required
             />
+            {errors.productName && <span className="error">{errors.productName}</span>}
           </label>
 
           <label>
@@ -74,6 +116,7 @@ const CatalogForm = ({ onSubmit }) => {
               onChange={handleChange}
               required
             />
+            {errors.category && <span className="error">{errors.category}</span>}
           </label>
 
           <label>
@@ -98,32 +141,17 @@ const CatalogForm = ({ onSubmit }) => {
 
           <label>
             Material:
-            <input
-              type="text"
-              name="material"
-              value={formData.material}
-              onChange={handleChange}
-            />
+            <input type="text" name="material" value={formData.material} onChange={handleChange} />
           </label>
 
           <label>
             Finish:
-            <input
-              type="text"
-              name="finish"
-              value={formData.finish}
-              onChange={handleChange}
-            />
+            <input type="text" name="finish" value={formData.finish} onChange={handleChange} />
           </label>
 
           <label>
             Dimensions:
-            <input
-              type="text"
-              name="dimensions"
-              value={formData.dimensions}
-              onChange={handleChange}
-            />
+            <input type="text" name="dimensions" value={formData.dimensions} onChange={handleChange} />
           </label>
 
           <label>
@@ -136,6 +164,7 @@ const CatalogForm = ({ onSubmit }) => {
               min="0"
               step="0.01"
             />
+            {errors.weight && <span className="error">{errors.weight}</span>}
           </label>
 
           <label>
@@ -148,6 +177,7 @@ const CatalogForm = ({ onSubmit }) => {
               min="0"
               required
             />
+            {errors.tradePrice && <span className="error">{errors.tradePrice}</span>}
           </label>
 
           <label>
@@ -160,6 +190,7 @@ const CatalogForm = ({ onSubmit }) => {
               min="0"
               max="100"
             />
+            {errors.gstPercent && <span className="error">{errors.gstPercent}</span>}
           </label>
 
           <label>
@@ -172,15 +203,12 @@ const CatalogForm = ({ onSubmit }) => {
               min="0"
               required
             />
+            {errors.mrp && <span className="error">{errors.mrp}</span>}
           </label>
 
           <label>
             Stock Status:
-            <select
-              name="stockStatus"
-              value={formData.stockStatus}
-              onChange={handleChange}
-            >
+            <select name="stockStatus" value={formData.stockStatus} onChange={handleChange}>
               <option value="In Stock">In Stock</option>
               <option value="Out of Stock">Out of Stock</option>
               <option value="Made to Order">Made to Order</option>
@@ -200,22 +228,25 @@ const CatalogForm = ({ onSubmit }) => {
 
           <label className="span-two">
             Image URL:
-            <input
-              type="url"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-            />
-          </label>
+            {productImage.selection && (
+              <ImageUploader object={productImage} imageSelector={setProductImage} />
+            )}
 
+
+
+            {formData.imageUrl && (
+              <img style={{ width: "210px" }} src={formData.imageUrl} alt="Preview" className="image-preview" />
+            )}
+          </label>
+          <button
+            type="button"
+            onClick={() => setProductImage((prev) => ({ ...prev, selection: true }))}
+          >
+            Choose Image
+          </button>
           <label className="span-two">
             Remarks:
-            <textarea
-              name="remarks"
-              rows="2"
-              value={formData.remarks}
-              onChange={handleChange}
-            />
+            <textarea name="remarks" rows="2" value={formData.remarks} onChange={handleChange} />
           </label>
         </div>
 

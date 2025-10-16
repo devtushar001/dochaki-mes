@@ -40,79 +40,51 @@ const ProductCatalogList = () => {
     if (error) return <p style={{ color: "red" }}>{error}</p>;
 
     return (
-        <div className="catalog-list">
-            <h2>Product Catalog</h2>
-            {products.length === 0 ? (
-                <p>No products found.</p>
-            ) : (
-                <div className="product-grid">
-                    {products.map((p) => (
-                        <div className="product-card" key={p._id}>
-                            {p.imageUrl && (
-                                <img src={p.imageUrl} alt={p.productName} className="product-img" />
-                            )}
+        <div className="catalog-l">
+            <div className="catalog-container">
+                {products.length === 0 ? (
+                    <p>No products found.</p>
+                ) : (
+                    products.map((product) => (
+                        <div className="product-card" key={product._id}>
+                            <div className="image">
+                                <img src={product.imageUrl} alt={product.productName} className="product-image" />
+                            </div>
+                            <div className="product-details">
+                                <h3>{product.productName}</h3>
+                                <p><strong>Product ID:</strong> {product.productCode}</p>
+                                <p><strong>Category:</strong> {product.category}</p>
+                                <p><strong>Compatible Model:</strong> {product.compatibleModel}</p>
+                                <p><strong>Selling Platforms:</strong> {product.listingPlatforms.join(", ")}</p>
+                                <p><strong>Created:</strong> {readDate(product.createdAt)}</p>
+                                <p><strong>Updated:</strong> {readDate(product.updatedAt)}</p>
+                                <p><strong>Created By:</strong>{product.createdBy} </p>
+                                <p><strong>Remark:</strong>{product.remarks} </p>
+                                {product.material}
+                                {product.finish}
+                                {product.dimensions}
+                                <br />
+                                {product.weight}
+                                <br />
+                                {product.tradePrice}
+                                <br />
 
-                            <h3>
-                                {p.brand} {p.productName}
-                            </h3>
+                                {product.mrp}
+                                <br />
+                                {product.stockStatus}
+                                <p>{product.description}</p>
+                            </div>
+                            <div className="action">
+                                <button>+</button>
+                                <button>-</button>
+                                <button>✎</button>
+                                <button>🗑️</button>
 
-                            <p>
-                                <strong>Product Id:</strong> {p.productId}
-                            </p>
-
-                            <p>
-                                <strong>Color Options:</strong>{" "}
-                                {p.colorOptions && p.colorOptions.length > 0 ? (
-                                    p.colorOptions.map((color, idx) => (
-                                        <span
-                                            key={idx}
-                                            style={{
-                                                background: "rgba(214, 214, 214, 0.71)",
-                                                borderRadius: "10px",
-                                                padding: "1px 6px",
-                                                marginRight: "4px",
-                                            }}
-                                        >
-                                            {color}
-                                        </span>
-                                    ))
-                                ) : (
-                                    "—"
-                                )}
-                            </p>
-
-                            <p>
-                                <strong>Category:</strong> {p.category}
-                            </p>
-                            <p>
-                                <strong>Selling Price:</strong> ₹{p.sellingPrice}
-                            </p>
-                            <p>
-                                <strong>Dealer Price:</strong> ₹{p.dealerPrice}
-                            </p>
-                            <p>
-                                <strong>Amazon Price:</strong> ₹{p.amazonPrice}
-                            </p>
-                            <p>
-                                <strong>Flipkart Price:</strong> ₹{p.flipkartPrice}
-                            </p>
-                            <p>
-                                <strong>Meesho Price:</strong> ₹{p.meeshoPrice}
-                            </p>
-
-                            <p>
-                                <strong>Stock:</strong> {p.quantityInStock}
-                            </p>
-
-                            <hr />
-                            <div className="time" style={{ fontSize: "12px" }}>
-                                {readDate(p.updatedAt)}
                             </div>
                         </div>
-                    ))}
-                </div>
-            )}
-
+                    ))
+                )}
+            </div>
         </div>
     );
 };
