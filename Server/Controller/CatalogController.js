@@ -5,9 +5,6 @@ import sanitizeHtml from "sanitize-html";
 
 export const AddCatalogController = async (req, res) => {
     try {
-        console.log("Incoming Data:", req.body);
-
-        //  Step 1: Authenticate User
         const userId = req.user?.id || req.user?._id || req.user;
         const userData = await UserModel.findById(userId);
         if (!userData) {
@@ -100,6 +97,7 @@ export const AddCatalogController = async (req, res) => {
         }
 
         //  Step 7: Create new product
+
         const newProduct = await CatalogModel.create({
             productCode,
             productName,
@@ -118,8 +116,14 @@ export const AddCatalogController = async (req, res) => {
             imageUrl,
             dateAdded: dateAdded || new Date(),
             remarks,
-            createdBy: userId,
+            createdBy: {
+                name: userData.name,
+                id: userData._id,
+                email: userData.email,
+            },
         });
+
+        console.log(newProduct);
 
         //  Step 8: Send response
         return res.status(201).json({
@@ -159,7 +163,7 @@ export const FetchCatalogController = async (req, res) => {
         }
 
         // MongoDB se fetch
-        const products = await CatalogModel.find(query).lean();
+        let products = await CatalogModel.find(query).lean();
 
         if (!products || products.length === 0) {
             return res.status(404).json({

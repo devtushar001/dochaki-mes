@@ -21,7 +21,7 @@ const ProductCatalogList = () => {
                 });
                 const data = await res.json();
                 if (res.ok) {
-                    setProducts(data.data || []); // assuming backend sends { products: [...] }
+                    setProducts(data.data || []); 
                 } else {
                     setError(data.message || "Failed to fetch products");
                 }

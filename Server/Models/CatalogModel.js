@@ -111,8 +111,9 @@ const CatalogSchema = new mongoose.Schema(
         },
         // Optional: link to the user who created it (if you use authentication)
         createdBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            type: {
+                String
+            },
             default: null,
         },
     },
